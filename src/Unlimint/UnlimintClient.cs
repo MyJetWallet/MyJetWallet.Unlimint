@@ -15,8 +15,9 @@ namespace MyJetWallet.Unlimint
 {
     public partial class UnlimintClient : IDisposable, IUnlimintClient
     {
-        public const string MainPublicApi = "https://api.circle.com/v1";
-        public const string TestPublicApi = "https://api-sandbox.circle.com/v1";
+        //TODO: Get production address
+        public const string MainPublicApi = "https://cardpay.com/api";
+        public const string TestPublicApi = "https://sandbox.cardpay.com/api";
 
         public static bool PrintPostApiCalls { get; set; } = false;
         public static bool PrintPutApiCalls { get; set; } = false;
@@ -26,6 +27,8 @@ namespace MyJetWallet.Unlimint
         public string EndpointUrl { get; private set; }
 
         public SecureString AccessToken { get; private set; }
+        public SecureString TerminalCode { get; private set; }
+        public SecureString Password { get; private set; }
 
         public bool ThrowThenErrorResponse { get; set; } = true;
 
@@ -38,9 +41,9 @@ namespace MyJetWallet.Unlimint
 
         #region CTOR
 
-        public UnlimintClient(string accessToken, CircleNetwork network = CircleNetwork.Main)
+        public UnlimintClient(string accessToken, UnlimintNetwork network = UnlimintNetwork.Main)
         {
-            this.EndpointUrl = network == CircleNetwork.Main ? MainPublicApi : TestPublicApi;
+            this.EndpointUrl = network == UnlimintNetwork.Main ? MainPublicApi : TestPublicApi;
             this.SetAccessToken(accessToken);
         }
 
@@ -51,8 +54,6 @@ namespace MyJetWallet.Unlimint
 
             if (apiRootUrl.Last() != '/')
                 apiRootUrl += '/';
-
-            apiRootUrl += "v1";
 
             this.EndpointUrl = apiRootUrl;
             this.SetAccessToken(accessToken);
@@ -74,6 +75,17 @@ namespace MyJetWallet.Unlimint
 
         #region Private Methods
 
+        private HttpClient GetAuthHttpClient()
+        {
+            lock (_gate)
+            {
+
+                SetupHttpClient();
+                SetupHttpClient();
+                return _httpClient;
+            }
+        }
+        
         private HttpClient GetHttpClient()
         {
             lock (_gate)
@@ -134,7 +146,8 @@ namespace MyJetWallet.Unlimint
         {
             var client = GetHttpClient();
             var data = JsonConvert.SerializeObject(obj ?? new object());
-            var response = await client.PostAsync($"{url}", new StringContent(data, Encoding.UTF8, "application/json"),
+            var response = await client.PostAsync($"{url}", 
+                new StringContent(data, Encoding.UTF8, "application/json"),
                 cancellationToken);
             var content = await response.Content.ReadAsStringAsync(cancellationToken);
 
@@ -152,7 +165,8 @@ namespace MyJetWallet.Unlimint
         {
             var client = GetHttpClient();
             var data = JsonConvert.SerializeObject(obj ?? new object());
-            var response = await client.PutAsync($"{url}", new StringContent(data, Encoding.UTF8, "application/json"),
+            var response = await client.PutAsync($"{url}", 
+                new StringContent(data, Encoding.UTF8, "application/json"),
                 cancellationToken);
             var content = await response.Content.ReadAsStringAsync(cancellationToken);
 
@@ -194,7 +208,7 @@ namespace MyJetWallet.Unlimint
         {
             if (ThrowThenErrorResponse)
             {
-                throw new CircleException(code, message);
+                throw new UnlimintException(code, message);
             }
         }
 

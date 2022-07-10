@@ -1,6 +1,5 @@
 ﻿using System.Runtime.Serialization;
 using MyJetWallet.Unlimint.Converters;
-using MyJetWallet.Unlimint.Models.Payouts;
 using Newtonsoft.Json;
 
 namespace MyJetWallet.Unlimint.Models.Payments
@@ -20,11 +19,11 @@ namespace MyJetWallet.Unlimint.Models.Payments
         [JsonProperty("merchantWalletId"), DataMember(Order = 4)]
         public string MerchantWalletId { get; set; }
 
-        [JsonProperty("amount"), DataMember(Order = 5)]
-        public CircleAmount Amount { get; set; }
+        // [JsonProperty("amount"), DataMember(Order = 5)]
+        // public CircleAmount Amount { get; set; }
 
-        [JsonProperty("source"), DataMember(Order = 6)]
-        public PaymentSource Source { get; set; }
+        // [JsonProperty("source"), DataMember(Order = 6)]
+        // public PaymentSource Source { get; set; }
 
         [JsonProperty("description"), DataMember(Order = 7)]
         public string Description { get; set; }
@@ -35,14 +34,14 @@ namespace MyJetWallet.Unlimint.Models.Payments
         [JsonProperty("captured"), DataMember(Order = 9)]
         public bool Captured { get; set; }
 
-        [JsonProperty("captureAmount"), DataMember(Order = 10)]
-        public CircleAmount CaptureAmount { get; set; }
+        // [JsonProperty("captureAmount"), DataMember(Order = 10)]
+        // public CircleAmount CaptureAmount { get; set; }
 
         [JsonProperty("captureDate"), DataMember(Order = 11)]
         public string CaptureDate { get; set; }
 
-        [JsonProperty("fees"), DataMember(Order = 12)]
-        public CircleAmount Fees { get; set; }
+        // [JsonProperty("fees"), DataMember(Order = 12)]
+        // public CircleAmount Fees { get; set; }
 
         [JsonProperty("trackingRef"), DataMember(Order = 13)]
         public string TrackingRef { get; set; }
@@ -65,8 +64,8 @@ namespace MyJetWallet.Unlimint.Models.Payments
         [JsonProperty("transactionHash"), DataMember(Order = 19)]
         public string TransactionHash { get; set; }
 
-        [JsonProperty("destination"), DataMember(Order = 20)]
-        public PaymentDestination Destination { get; set; }
+        // [JsonProperty("destination"), DataMember(Order = 20)]
+        // public PaymentDestination Destination { get; set; }
 
         [JsonProperty("requiredAction", NullValueHandling = NullValueHandling.Ignore), DataMember(Order = 21)]
         public RequiredAction RequiredAction { get; set; }

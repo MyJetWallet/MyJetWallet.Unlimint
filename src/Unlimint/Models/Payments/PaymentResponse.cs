@@ -4,12 +4,9 @@ using Newtonsoft.Json;
 namespace MyJetWallet.Unlimint.Models.Payments
 {
     [DataContract]
-    public class RequiredAction
+    public class PaymentResponse
     {
-        [JsonProperty("type"), DataMember(Order = 1)]
-        public string Type { get; set; }
-
-        [JsonProperty("redirect_url"), DataMember(Order = 2)]
+        [JsonProperty("redirect_url"), DataMember(Order = 1)]
         public string RedirectUrl { get; set; }
     }
 }
