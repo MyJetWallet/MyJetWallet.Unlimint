@@ -50,7 +50,7 @@ namespace TestApp
                 "BANKCARD");
  
 
-            var paymentInfo = await _client.GetPaymentAsync("be42103b-b420-4d2e-96a4-805cdc94b7d7");
+            //var paymentInfo = await _client.GetPaymentAsync("be42103b-b420-4d2e-96a4-805cdc94b7d7");
 
             //await TestPublicKey();
         }
