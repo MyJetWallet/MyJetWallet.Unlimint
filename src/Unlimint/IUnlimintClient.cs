@@ -13,8 +13,8 @@ namespace MyJetWallet.Unlimint
         /// <summary>
         /// Create a payment.
         /// </summary>
-        /// <param name="idempotencyKey">Unique idempotency key. This key is utilized to ensure exactly-once execution of mutating requests.</param>
-        /// <param name="keyId">Unique identifier of the public key used in encryption.</param>
+        /// <param name="merchantOrderId">Unique idempotency key. This key is utilized to ensure exactly-once execution of mutating requests.</param>
+        /// <param name="paymentId">Unique identifier of the public key used in encryption.</param>
         /// <param name="email">Email of the user</param>
         /// <param name="phoneNumber">Phone number of the user in E.164 format. We recommend using a library such as libphonenumber to parse and validate phone numbers.</param>
         /// <param name="sessionId">Hash of the session identifier; typically of the end user. This helps us make risk decisions and prevent fraud. IMPORTANT: Please hash the session identifier to prevent sending us actual session identifiers.</param>
@@ -32,8 +32,8 @@ namespace MyJetWallet.Unlimint
         /// <param name="verificationUrlFailure"></param>
         /// <param name="time"></param>
         /// <returns></returns>
-        WebCallResult<PaymentResponse> CreatePayment(
-            string idempotencyKey, string keyId,
+        WebCallResult<PaymentGatewayCreationResponse> CreatePayment(
+            string merchantOrderId, string paymentId,
             string email,
             string phoneNumber,
             string sessionId,
@@ -51,9 +51,9 @@ namespace MyJetWallet.Unlimint
             string paymentMethod,
             CancellationToken cancellationToken = default);
 
-        Task<WebCallResult<PaymentResponse>> CreatePaymentAsync(
-            string idempotencyKey, 
-            string keyId,
+        Task<WebCallResult<PaymentGatewayCreationResponse>> CreatePaymentAsync(
+            string merchantOrderId, 
+            string paymentId,
             string email,
             string phoneNumber,
             string sessionId,
@@ -77,11 +77,11 @@ namespace MyJetWallet.Unlimint
         /// <param name="id">Unique identifier of the payment.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        WebCallResult<PaymentInfo> GetPayment(
+        WebCallResult<PaymentDataResponse> GetPayment(
             string id,
             CancellationToken cancellationToken = default);
 
-        Task<WebCallResult<PaymentInfo>> GetPaymentAsync(
+        Task<WebCallResult<PaymentDataResponse>> GetPaymentAsync(
             string id,
             CancellationToken cancellationToken = default);
 

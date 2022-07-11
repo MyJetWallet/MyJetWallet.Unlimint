@@ -14,25 +14,18 @@ namespace TestApp
 
         static async Task Main(string[] args)
         {
-            // _accessToken = Environment.GetEnvironmentVariable("UnlimintAccessToken");
-            //
-            // if (string.IsNullOrEmpty(_accessToken))
-            // {
-            //     Console.WriteLine("AccessToken is empty. Please setup env variable");
-            //     return;
-            // }
-            
-            var terminalcCode = "18397";
-            var password = "FpK2cy143POj";
+            var terminalcCode = "XXX";
+            var password = "***";
             
             _authClient = new UnlimintAuthClient(terminalcCode, password, UnlimintNetwork.Test);
             var token = await _authClient.GetAuthorizationTokenAsync();
                 
             _client = new UnlimintClient(token?.Data?.AccessToken, UnlimintNetwork.Test);
-            //var token = await _client.GetAuthorizationTokenAsync("FpK2cy143POj", "18397");
+            var paymentId = Guid.NewGuid().ToString();
+            var merchantOrderId = Guid.NewGuid().ToString();
             var payment = await _client.CreatePaymentAsync(
-                Guid.NewGuid().ToString(), 
-                "key-id-" + Guid.NewGuid().ToString(), 
+                merchantOrderId, 
+                paymentId, 
                 "yuriy.2022.07.10.001@mailinator.com",
                 "+359885989618", 
                 "session-id", 
@@ -50,9 +43,7 @@ namespace TestApp
                 "BANKCARD");
  
 
-            //var paymentInfo = await _client.GetPaymentAsync("be42103b-b420-4d2e-96a4-805cdc94b7d7");
-
-            //await TestPublicKey();
+            var paymentInfo = await _client.GetPaymentAsync(paymentId);
         }
 
         private static async Task TestPublicKey()
