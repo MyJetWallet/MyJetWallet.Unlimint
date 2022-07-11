@@ -26,7 +26,7 @@ jobs:
         run: dotnet test --no-build --configuration Release
 
       - name: Create the package
-        run: dotnet pack --configuration Release src/Circle/MyJetWallet.Unlimint.csproj /p:Version=${GITHUB_REF#refs/tags/}
+        run: dotnet pack --configuration Release src/Unlimint/MyJetWallet.Unlimint.csproj /p:Version=${GITHUB_REF#refs/tags/}
 
       - name: Publish the package to GPR
         run: dotnet nuget push src/Unlimint/bin/Release/*.nupkg -s "https://api.nuget.org/v3/index.json" -k ${{ secrets.NUGET_TOCKEN }}
@@ -34,7 +34,7 @@ jobs:
       - name: Publish the package to GitHub
         uses: MyJetWallet/nuget-publish-to-github-packages-action@v2.1
         with:
-          nupkg-path: './src/Circle/bin/Release/*.nupkg'
+          nupkg-path: './src/Unlimint/bin/Release/*.nupkg'
           repo-owner: 'myjetwallet'
           gh-user: ${{ github.actor }}
           token: ${{ secrets.GITHUB_TOKEN }}  

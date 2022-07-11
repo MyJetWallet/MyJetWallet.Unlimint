@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace MyJetWallet.Unlimint
 {
-    public partial class UnlimintClient : IDisposable, IUnlimintClient
+    public partial class UnlimintAuthClient : IDisposable, IUnlimintAuthClient
     {
         //TODO: Get production address
         public const string MainPublicApi = "https://cardpay.com/api";
@@ -41,41 +41,35 @@ namespace MyJetWallet.Unlimint
 
         #region CTOR
 
-        public UnlimintClient(string accessToken, UnlimintNetwork network = UnlimintNetwork.Main)
+        public UnlimintAuthClient(string terminalCode, string password, UnlimintNetwork network = UnlimintNetwork.Main)
         {
             this.EndpointUrl = network == UnlimintNetwork.Main ? MainPublicApi : TestPublicApi;
-            this.SetAccessToken(accessToken);
+            this.SetTerminalCode(terminalCode);
+            this.SetPassword(password);
         }
-
-        public UnlimintClient(string accessToken, string apiRootUrl)
-        {
-            if (string.IsNullOrEmpty(apiRootUrl))
-                throw new ArgumentException("api url cannot be empty", nameof(apiRootUrl));
-
-            if (apiRootUrl.Last() != '/')
-                apiRootUrl += '/';
-
-            this.EndpointUrl = apiRootUrl;
-            this.SetAccessToken(accessToken);
-        }
-
         #endregion
 
         #region Access Token
 
-        public void SetAccessToken(string accessToken)
+        public void SetPassword(string password)
         {
-            if (!string.IsNullOrEmpty(accessToken))
+            if (!string.IsNullOrEmpty(password))
             {
-                this.AccessToken = accessToken.StringToSecureString();
+                this.Password = password.StringToSecureString();
             }
         }
-
+        
+        public void SetTerminalCode(string terminalCode)
+        {
+            if (!string.IsNullOrEmpty(terminalCode))
+            {
+                this.TerminalCode = terminalCode.StringToSecureString();
+            }
+        }
         #endregion
 
         #region Private Methods
 
-        
         private HttpClient GetHttpClient()
         {
             lock (_gate)
@@ -100,8 +94,8 @@ namespace MyJetWallet.Unlimint
 
             client.BaseAddress = new Uri(this.EndpointUrl);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue("Bearer", this.AccessToken.SecureStringToString());
+            // client.DefaultRequestHeaders.Authorization =
+            //     new AuthenticationHeaderValue("Bearer", this.AccessToken.SecureStringToString());
 
             _lastHttpClient?.Dispose();
             _lastHttpClient = _httpClient;
@@ -109,35 +103,12 @@ namespace MyJetWallet.Unlimint
             _lastHttpSetupTime = DateTime.UtcNow;
         }
 
-        private string ConvertToQueryString(Dictionary<string, object> nvc)
-        {
-            var array = nvc
-                .Where(keyValue => keyValue.Value != null)
-                .Select(keyValue =>
-                    new KeyValuePair<string, string>(keyValue.Key, keyValue.Value.ConvertValueToString()))
-                .Select(keyValue => $"{WebUtility.UrlEncode(keyValue.Key)}={WebUtility.UrlEncode(keyValue.Value)}")
-                .ToArray();
-            return array.Any() ? "?" + string.Join("&", array) : string.Empty;
-        }
-
-        private async Task<WebCallResult<T>> GetAsync<T>(string url,
-            CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var client = this.GetHttpClient();
-            var response = await client.GetAsync($"{url}", cancellationToken);
-            var content = await response.Content.ReadAsStringAsync(cancellationToken);
-
-            // Return
-            return this.EvaluateResponse<T>(response, content);
-        }
-
-        private async Task<WebCallResult<T>> PostAsync<T>(string url, object obj = null,
+        private async Task<WebCallResult<T>> PostAsync<T>(string url, List<KeyValuePair<string, string>> data,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             var client = GetHttpClient();
-            var data = JsonConvert.SerializeObject(obj ?? new object());
             var response = await client.PostAsync($"{url}", 
-                new StringContent(data, Encoding.UTF8, "application/json"),
+                new FormUrlEncodedContent(data),
                 cancellationToken);
             var content = await response.Content.ReadAsStringAsync(cancellationToken);
 
@@ -150,38 +121,6 @@ namespace MyJetWallet.Unlimint
             return this.EvaluateResponse<T>(response, content);
         }
 
-        private async Task<WebCallResult<T>> PutAsync<T>(string url, object obj = null,
-            CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var client = GetHttpClient();
-            var data = JsonConvert.SerializeObject(obj ?? new object());
-            var response = await client.PutAsync($"{url}", 
-                new StringContent(data, Encoding.UTF8, "application/json"),
-                cancellationToken);
-            var content = await response.Content.ReadAsStringAsync(cancellationToken);
-
-            if (PrintPutApiCalls)
-            {
-                Console.WriteLine($"PUT: {url}\nBody: {data}\nResp: {content}");
-            }
-            
-            // Return
-            return this.EvaluateResponse<T>(response, content);
-        }
-
-        private async Task<WebCallResult<T>> DeleteAsync<T>(string url, object obj = null,
-            CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var client = GetHttpClient();
-            var request = new HttpRequestMessage(HttpMethod.Delete, $"{url}");
-            var data = JsonConvert.SerializeObject(obj ?? new object());
-            request.Content = new StringContent(data, Encoding.UTF8, "application/json");
-            var response = await client.SendAsync(request, cancellationToken);
-            var content = await response.Content.ReadAsStringAsync(cancellationToken);
-
-            // Return
-            return this.EvaluateResponse<T>(response, content);
-        }
 
         private WebCallResult<T> EvaluateResponse<T>(HttpResponseMessage response, string content)
         {
@@ -190,10 +129,11 @@ namespace MyJetWallet.Unlimint
                 ThrowErrorExceptionIfEnabled(HttpStatusCode.NotFound, "Empty Response");
                 return new WebCallResult<T>(response, default, HttpStatusCode.NotFound, "Empty Response");
             }
+
             var obj = JsonConvert.DeserializeObject<T>(content);
             var objCallResult = new CallResult<T>(obj, (int)response.StatusCode, String.Empty);
             return new WebCallResult<T>(response, objCallResult);
-            //return new WebCallResult<T>(response, JsonConvert.DeserializeObject<CallResult<T>>(content));
+            //return WebCallResult<T>(response, JsonConvert.DeserializeObject<CallResult<T>>(content));
         }
 
         private void ThrowErrorExceptionIfEnabled(HttpStatusCode code, string message)

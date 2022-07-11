@@ -44,8 +44,8 @@ namespace MyJetWallet.Unlimint.Models
 
         public Dictionary<string, string> ResponseHeaders { get; set; }
 
-        public WebCallResult(HttpResponseMessage response, T data, HttpStatusCode code, string message) : base(data,
-            (int)code, message)
+        public WebCallResult(HttpResponseMessage response, T data, HttpStatusCode code, string message) 
+            : base(data, (int)code, message)
         {
             if (response != null)
             {
@@ -58,9 +58,8 @@ namespace MyJetWallet.Unlimint.Models
             }
         }
 
-        public WebCallResult(HttpResponseMessage response, CallResult<T> result) : base(result.Data,
-            (int)response.StatusCode,
-            result.Message)
+        public WebCallResult(HttpResponseMessage response, CallResult<T> result) : 
+            base(result.Data, (int)response.StatusCode, result.Message)
         {
             ResponseStatusCode = response.StatusCode;
             ResponseHeaders = new Dictionary<string, string>();

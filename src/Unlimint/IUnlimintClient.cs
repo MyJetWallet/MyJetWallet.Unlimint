@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MyJetWallet.Unlimint.Models;
-using MyJetWallet.Unlimint.Models.Auth;
 using MyJetWallet.Unlimint.Models.Payments;
 
 
@@ -10,17 +9,6 @@ namespace MyJetWallet.Unlimint
 {
     public interface IUnlimintClient
     {
-        #region AuthToken
-
-        WebCallResult<AuthToken> GetAuthorizationToken(string terminalCode, string password,
-            CancellationToken cancellationToken = default);
-
-        Task<WebCallResult<AuthToken>> GetAuthorizationTokenAsync(string terminalCode, string password,
-            CancellationToken cancellationToken = default);
-
-        #endregion
-
-
         #region Payments
         /// <summary>
         /// Create a payment.
