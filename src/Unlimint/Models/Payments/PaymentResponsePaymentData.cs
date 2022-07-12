@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using MyJetWallet.Unlimint.Converters;
 using Newtonsoft.Json;
 
 namespace MyJetWallet.Unlimint.Models.Payments;
@@ -20,8 +21,8 @@ public class PaymentResponsePaymentData
     public string Created  { get; set; }
     [JsonProperty("currency"), DataMember(Order = 6)]
     public string Currency  { get; set; }
-    [JsonProperty("decline_code"), DataMember(Order = 7)]
-    public string DeclineCode  { get; set; }
+    [JsonProperty("decline_code"), JsonConverter(typeof(PaymentErrorCodeConverter)), DataMember(Order = 7)]
+    public PaymentErrorCode? DeclineCode  { get; set; }
     [JsonProperty("decline_reason"), DataMember(Order = 8)]
     public string DeclineReason  { get; set; }
     [JsonProperty("extended_data"), DataMember(Order = 9)]
