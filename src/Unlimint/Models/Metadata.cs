@@ -7,15 +7,15 @@ namespace MyJetWallet.Unlimint.Models
     public class Metadata
     {
         [JsonProperty("email"), DataMember(Order = 1)]
-        public string Email { get; internal set; }
+        public string Email { get; set; }
 
         [JsonProperty("phoneNumber"), DataMember(Order = 2)]
-        public string PhoneNumber { get; internal set; }
+        public string PhoneNumber { get; set; }
 
         [JsonProperty("sessionId"), DataMember(Order = 3)]
-        public string SessionId { get; internal set; }
+        public string SessionId { get; set; }
 
         [JsonProperty("ipAddress"), DataMember(Order = 4)]
-        public string IpAddress { get; internal set; }
+        public string IpAddress { get; set; }
     }
 }
