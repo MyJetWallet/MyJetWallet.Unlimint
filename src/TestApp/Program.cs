@@ -14,8 +14,8 @@ namespace TestApp
 
         static async Task Main(string[] args)
         {
-            var terminalcCode = "XXX";
-            var password = "***";
+            var terminalcCode = "18397";
+            var password = "FpK2cy143POj";
             
             _authClient = new UnlimintAuthClient(terminalcCode, password, UnlimintNetwork.Test);
             var token = await _authClient.GetAuthorizationTokenAsync();
@@ -34,7 +34,7 @@ namespace TestApp
                 "USD", 
                 null, 
                 true, 
-                "01", 
+                "01" == "04", 
                 "yuriy-test-payment", 
                 "https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?success=true", 
                 "https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?failure=true", 
