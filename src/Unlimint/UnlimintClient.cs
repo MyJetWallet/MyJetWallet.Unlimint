@@ -27,8 +27,6 @@ namespace MyJetWallet.Unlimint
         public string EndpointUrl { get; private set; }
 
         public SecureString AccessToken { get; private set; }
-        public SecureString TerminalCode { get; private set; }
-        public SecureString Password { get; private set; }
 
         public bool ThrowThenErrorResponse { get; set; } = true;
 

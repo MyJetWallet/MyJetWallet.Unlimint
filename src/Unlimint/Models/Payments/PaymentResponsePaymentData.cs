@@ -41,4 +41,7 @@ public class PaymentResponsePaymentData
     public string Note  { get; set; }
     [JsonProperty("rrn"), DataMember(Order = 16)]
     public string Rrn  { get; set; }
+    [JsonProperty("status"), JsonConverter(typeof(PaymentStatusConverter)), DataMember(Order = 17)]
+    public PaymentStatus Status  { get; set; }
 }
+

@@ -16,12 +16,16 @@ namespace MyJetWallet.Unlimint.Converters
 
         protected override List<KeyValuePair<PaymentStatus, string>> Mapping => new()
         {
-            new KeyValuePair<PaymentStatus, string>(PaymentStatus.Pending, "pending"),
-            new KeyValuePair<PaymentStatus, string>(PaymentStatus.Confirmed, "confirmed"),
-            new KeyValuePair<PaymentStatus, string>(PaymentStatus.Complete, "complete"),
-            new KeyValuePair<PaymentStatus, string>(PaymentStatus.Paid, "paid"),
-            new KeyValuePair<PaymentStatus, string>(PaymentStatus.Failed, "failed"),
-            new KeyValuePair<PaymentStatus, string>(PaymentStatus.ActionRequired, "action_required")
+            new KeyValuePair<PaymentStatus, string>(PaymentStatus.New, "NEW"),
+            new KeyValuePair<PaymentStatus, string>(PaymentStatus.InProgress, "IN_PROGRESS"),
+            new KeyValuePair<PaymentStatus, string>(PaymentStatus.Declined, "DECLINED"),
+            new KeyValuePair<PaymentStatus, string>(PaymentStatus.Authorized, "AUTHORIZED"),
+            new KeyValuePair<PaymentStatus, string>(PaymentStatus.Completed, "COMPLETED"),
+            new KeyValuePair<PaymentStatus, string>(PaymentStatus.Refunded, "REFUNDED"),
+            new KeyValuePair<PaymentStatus, string>(PaymentStatus.Voided, "VOIDED"),
+            new KeyValuePair<PaymentStatus, string>(PaymentStatus.Terminated, "TERMINATED"),
+            new KeyValuePair<PaymentStatus, string>(PaymentStatus.ChargedBack, "CHARGED_BACK"),
+            new KeyValuePair<PaymentStatus, string>(PaymentStatus.ChargedBackResolved, "CHARGEBACK_RESOLVED")
         };
     }
 }

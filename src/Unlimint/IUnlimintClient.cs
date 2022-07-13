@@ -10,6 +10,7 @@ namespace MyJetWallet.Unlimint
     public interface IUnlimintClient
     {
         #region Payments
+
         /// <summary>
         /// Create a payment.
         /// </summary>
@@ -26,11 +27,12 @@ namespace MyJetWallet.Unlimint
         /// <param name="sourceType">Type of the source.</param>
         /// <param name="description">Description of the payment with length restriction of 240 characters.</param>
         /// <param name="encryptedData">PGP encrypted json string. The object format given here needs to be stringified and PGP encrypted before it is sent to the server, so encryptedData will end up as a string, rather than an object.</param>
-        /// <param name="paymentMethod"></param>
-        /// <param name="cancellationToken"></param>
         /// <param name="verificationUrlSuccess"></param>
         /// <param name="verificationUrlFailure"></param>
         /// <param name="time"></param>
+        /// <param name="paymentMethod"></param>
+        /// <param name="clientId"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         WebCallResult<PaymentGatewayCreationResponse> CreatePayment(
             string merchantOrderId, string paymentId,
@@ -49,6 +51,7 @@ namespace MyJetWallet.Unlimint
             string verificationUrlFailure,
             DateTime time,
             string paymentMethod,
+            string clientId,
             CancellationToken cancellationToken = default);
 
         Task<WebCallResult<PaymentGatewayCreationResponse>> CreatePaymentAsync(
@@ -69,6 +72,7 @@ namespace MyJetWallet.Unlimint
             string verificationUrlFailure,
             DateTime time,
             string paymentMethod,
+            string clientId,
             CancellationToken cancellationToken = default);
 
         /// <summary>

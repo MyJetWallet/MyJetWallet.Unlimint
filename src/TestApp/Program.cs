@@ -40,7 +40,8 @@ namespace TestApp
                 "https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?success=true", 
                 "https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?failure=true", 
                 DateTime.UtcNow, 
-                "BANKCARD");
+                "BANKCARD",
+                "CLIENT-936147-bee8-4468-86f2");
  
 
             var paymentInfo = await _client.GetPaymentAsync(paymentId);

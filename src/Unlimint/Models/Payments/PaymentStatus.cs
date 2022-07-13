@@ -2,11 +2,16 @@
 {
     public enum PaymentStatus
     {
-        Pending,
-        Confirmed,
-        Complete,
-        Paid,
-        Failed,
-        ActionRequired
+        New,
+        InProgress,
+        Declined,
+        Authorized,
+        Completed,
+        Cancelled,
+        Refunded,
+        Voided,
+        Terminated,
+        ChargedBack,
+        ChargedBackResolved
     }
 }

@@ -18,12 +18,15 @@ namespace MyJetWallet.Unlimint
             string paymentId,
             string email,
             string phoneNumber, string sessionId,
-            string ipAddress, decimal amount, string currency, string verification, string sourceId, string sourceType,
-            string description, string encryptedData, string verificationUrlSuccess, string verificationUrlFailure, 
-            DateTime time, string paymentMethod, CancellationToken cancellationToken = default) =>
+            string ipAddress, decimal amount, string currency, string verification, string sourceId, 
+            string sourceType, string description, string encryptedData, string verificationUrlSuccess, 
+            string verificationUrlFailure, DateTime time, string paymentMethod, string clientId, 
+            CancellationToken cancellationToken = default) =>
             CreatePaymentAsync(merchantOrderId,
-                paymentId, email, phoneNumber, sessionId, ipAddress, amount, currency, verification, sourceId, sourceType,
-                description, encryptedData, verificationUrlSuccess, verificationUrlFailure, time, paymentMethod, cancellationToken).Result;
+                paymentId, email, phoneNumber, sessionId, ipAddress, amount, currency, verification, 
+                sourceId, sourceType, description, encryptedData, verificationUrlSuccess, 
+                verificationUrlFailure, time, paymentMethod, clientId, cancellationToken)
+                .Result;
         
         public async Task<WebCallResult<PaymentGatewayCreationResponse>> CreatePaymentAsync(
             string merchantOrderId, 
@@ -43,6 +46,7 @@ namespace MyJetWallet.Unlimint
             string verificationUrlFailure, 
             DateTime time, 
             string paymentMethod,
+            string clientId,
             CancellationToken cancellationToken = default)
         {
             var data = new PaymentRequest
