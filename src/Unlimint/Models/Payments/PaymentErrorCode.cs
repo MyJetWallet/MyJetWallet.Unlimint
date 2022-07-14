@@ -43,8 +43,10 @@
         DeclinedByBankAntifraud = 16,
         BankMalfunction = 17,
         ConnectionProblem = 18,
+        IncorrectPaymentData = 19,
         BitcoinNoPaymentReceived = 21,
         BitcoinWrongPaymentReceived = 22,
-        BitcoinConfirmationsPaymentTimeout = 23
+        BitcoinConfirmationsPaymentTimeout = 23,
+        MaximumAmountLimitExceeded = 25,
     }
 }

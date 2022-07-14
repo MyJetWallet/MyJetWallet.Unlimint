@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.VisualBasic;
@@ -14,18 +15,18 @@ namespace TestApp
 
         static async Task Main(string[] args)
         {
-            var terminalcCode = "18397";
-            var password = "FpK2cy143POj";
+            var terminalcCode = "43109";
+            var password = "vL9H0VFho32y";
             
             _authClient = new UnlimintAuthClient(terminalcCode, password, UnlimintNetwork.Test);
             var token = await _authClient.GetAuthorizationTokenAsync();
                 
             _client = new UnlimintClient(token?.Data?.AccessToken, UnlimintNetwork.Test);
-            var paymentId = Guid.NewGuid().ToString();
+            var requestId = Guid.NewGuid().ToString();
             var merchantOrderId = Guid.NewGuid().ToString();
             var payment = await _client.CreatePaymentAsync(
                 merchantOrderId, 
-                paymentId, 
+                requestId, 
                 "yuriy.2022.07.10.001@mailinator.com",
                 "+359885989618", 
                 "session-id", 
@@ -36,14 +37,20 @@ namespace TestApp
                 true, 
                 "01" == "04", 
                 "yuriy-test-payment", 
-                "https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?success=true", 
-                "https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?failure=true", 
+                null, //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?success=true", 
+                null, //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?failure=true", 
                 DateTime.UtcNow, 
                 "BANKCARD",
                 "CLIENT-936147-bee8-4468-86f2");
  
 
-            var paymentInfo = await _client.GetPaymentAsync(paymentId);
+            var paymentDataInfo = await _client.GetPaymentByMerchantOrderIdAsync(
+                merchantOrderId, requestId);
+            var paymentId = paymentDataInfo?.Data?.Payments
+                .FirstOrDefault()?
+                .PaymentData
+                .Id;
+            var paymentInfo = await _client.GetPaymentByIdAsync(paymentId);
         }
 
         private static async Task TestPublicKey()

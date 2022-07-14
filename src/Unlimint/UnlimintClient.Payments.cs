@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MyJetWallet.Unlimint.Models;
 using MyJetWallet.Unlimint.Models.Payments;
+using System.Linq;
 
 namespace MyJetWallet.Unlimint
 {
@@ -15,7 +16,7 @@ namespace MyJetWallet.Unlimint
         /// </summary>
         public WebCallResult<PaymentGatewayCreationResponse> CreatePayment(
             string merchantOrderId, 
-            string paymentId,
+            string requestId,
             string email,
             string phoneNumber,
             string sessionId,
@@ -34,7 +35,7 @@ namespace MyJetWallet.Unlimint
             CancellationToken cancellationToken = default) =>
             CreatePaymentAsync(
                     merchantOrderId,
-                     paymentId,
+                     requestId,
                      email,
                      phoneNumber,
                      sessionId,
@@ -55,7 +56,7 @@ namespace MyJetWallet.Unlimint
         
         public async Task<WebCallResult<PaymentGatewayCreationResponse>> CreatePaymentAsync(
             string merchantOrderId, 
-            string paymentId,
+            string requestId,
             string email,
             string phoneNumber,
             string sessionId,
@@ -77,7 +78,7 @@ namespace MyJetWallet.Unlimint
             {
                 Request = new Request
                 {
-                    Id = paymentId,
+                    Id = requestId,
                     Time = time
                 },
                 Customer = new PaymentRequestCustomer
@@ -106,20 +107,27 @@ namespace MyJetWallet.Unlimint
                     //Items = null,
                     //ShippingAddress = null
                 },
+                // CardAccount = new PaymentRequestCardAccount
+                // {
+                //     BillingAddress = null,
+                //     Card = null,
+                //     EncryptedCardData = null,
+                //     Token = null
+                // },
                 PaymentData = new PaymentRequestPaymentData
                 {
-                    Amount = amount,
+                    Amount = amount.ToString(),
                     //AuthenticationRequest = false,
                     Currency = currency,
                     //DynamicDescriptor = null,
                     //EncryptedData = null,
-                    //GenerateToken = generateToken,
+                    GenerateToken = generateToken,
                     //InstallmentAmount = 0,
-                    InstallmentType = "IF",
-                    Installments = 1,
-                    //Note = description,
-                    //Preauth = false,
-                    ThreeDsChallengeIndicator = useThreeDsChallengeIndicator == true ? "04" : "01",
+                    //InstallmentType = "IF",
+                    //Installments = 1,
+                    Note = description,
+                    //Preauth = true,
+                    //ThreeDsChallengeIndicator = useThreeDsChallengeIndicator == true ? "04" : "01",
                     //TransType = (TransTypeEnum)0
                 },
                 PaymentMethod = paymentMethod,
@@ -139,13 +147,20 @@ namespace MyJetWallet.Unlimint
         /// <param name="id">Unique identifier of the payment.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public WebCallResult<PaymentDataResponse> GetPayment(string paymentId, CancellationToken cancellationToken = default) =>
-            GetPaymentAsync(paymentId, cancellationToken).Result;
+        public WebCallResult<PaymentResponse> GetPaymentById(string paymentId, CancellationToken cancellationToken = default) =>
+            GetPaymentByIdAsync(paymentId, cancellationToken).Result;
 
-        public async Task<WebCallResult<PaymentDataResponse>> GetPaymentAsync(string paymentId,
+        public async Task<WebCallResult<PaymentResponse>> GetPaymentByIdAsync(string paymentId,
             CancellationToken cancellationToken = default)
         {
-            return await GetAsync<PaymentDataResponse>($"{EndpointUrl}/payments/?request_id={paymentId}", cancellationToken);
+            return await GetAsync<PaymentResponse>($"{EndpointUrl}/payments/{paymentId}", cancellationToken);
+        }
+
+        public async Task<WebCallResult<PaymentDataResponse>> GetPaymentByMerchantOrderIdAsync(string merchantOrderId, string requestId,
+            CancellationToken cancellationToken = default)
+        {
+            return await GetAsync<PaymentDataResponse>($"{EndpointUrl}/payments?merchant_order_id={merchantOrderId}&request_id={requestId}", 
+                cancellationToken);
         }
     }
 
