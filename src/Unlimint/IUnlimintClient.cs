@@ -22,17 +22,16 @@ namespace MyJetWallet.Unlimint
         /// <param name="ipAddress">Single IPv4 or IPv6 address of user</param>
         /// <param name="amount">Magnitude of the amount, in units of the currency, with a ..</param>
         /// <param name="currency">Currency code.</param>
-        /// <param name="verification">Indicates the verification method for this payment. 3D Secure is currently limited to the Sandbox environment.</param>
         /// <param name="sourceId">Unique identifier for the source.</param>
-        /// <param name="sourceType">Type of the source.</param>
+        /// <param name="threeDsChallengeIndicator"></param>
         /// <param name="description">Description of the payment with length restriction of 240 characters.</param>
-        /// <param name="encryptedData">PGP encrypted json string. The object format given here needs to be stringified and PGP encrypted before it is sent to the server, so encryptedData will end up as a string, rather than an object.</param>
         /// <param name="verificationUrlSuccess"></param>
         /// <param name="verificationUrlFailure"></param>
         /// <param name="time"></param>
         /// <param name="paymentMethod"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken"></param>
+        /// <param name="generateToken"></param>
         /// <returns></returns>
         WebCallResult<PaymentGatewayCreationResponse> CreatePayment(
             string merchantOrderId, 

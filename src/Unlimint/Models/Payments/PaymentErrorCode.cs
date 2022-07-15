@@ -25,7 +25,8 @@
 // 22	Wrong payment was received (for BITCOIN payment method only)	Wrong amount/payment details were indicated
 // 23	Confirmations payment timeout (for BITCOIN payment method only)	No needed number of confirmation received during needed time period (Unlimint manager can procide more details on your settings)
     public enum PaymentErrorCode
-    {
+    {        
+        Ok = 0,
         SystemMalfunction = 1,
         CancelledByCustomer = 2,
         DeclinedByAntifraud = 3,

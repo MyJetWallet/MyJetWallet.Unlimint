@@ -38,6 +38,7 @@ namespace MyJetWallet.Unlimint.Converters
             new KeyValuePair<PaymentErrorCode, string>(PaymentErrorCode.BitcoinWrongPaymentReceived, "22"),
             new KeyValuePair<PaymentErrorCode, string>(PaymentErrorCode.BitcoinConfirmationsPaymentTimeout, "23"),
             new KeyValuePair<PaymentErrorCode, string>(PaymentErrorCode.MaximumAmountLimitExceeded, "25"),
+            new KeyValuePair<PaymentErrorCode, string>(PaymentErrorCode.Ok, null),
         };
     }
 }

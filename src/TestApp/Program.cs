@@ -10,39 +10,42 @@ namespace TestApp
     static class Program
     {
 
-        private static IUnlimintAuthClient _authClient;
-        private static IUnlimintClient _client;
+        private static UnlimintAuthClient _authClient;
+        private static UnlimintClient _client;
 
         static async Task Main(string[] args)
         {
-            var terminalcCode = "43109";
-            var password = "vL9H0VFho32y";
+            //TODO: Remove credentials
+            var terminalcCode = "***";
+            var password = "***";
             
             _authClient = new UnlimintAuthClient(terminalcCode, password, UnlimintNetwork.Test);
+            _client = new UnlimintClient(null, UnlimintNetwork.Test);
             var token = await _authClient.GetAuthorizationTokenAsync();
-                
-            _client = new UnlimintClient(token?.Data?.AccessToken, UnlimintNetwork.Test);
+            _client.SetAccessToken(token?.Data?.AccessToken);
+
             var requestId = Guid.NewGuid().ToString();
             var merchantOrderId = Guid.NewGuid().ToString();
             var payment = await _client.CreatePaymentAsync(
                 merchantOrderId, 
                 requestId, 
-                "yuriy.2022.07.10.001@mailinator.com",
-                "+359885989618", 
-                "session-id", 
+                "yuriy.test.2022.07.15.001@mailinator.com",
+                //"+359885989618", 
+                null,
+                "259f6226-4231-4936-8bf4-19f5cc900109", 
                 "234.22.12.01", 
-                12.35m, 
+                1000m, 
                 "USD", 
-                null, 
+                "jetwallet|-|5e1c37e3230144a48ccb13b9662fc491|-|SP-5e1c37e3230144a48ccb13b9662fc491", 
                 true, 
                 "01" == "04", 
-                "yuriy-test-payment", 
-                null, //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?success=true", 
-                null, //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?failure=true", 
+                "jetwallet|-|5e1c37e3230144a48ccb13b9662fc491|-|SP-5e1c37e3230144a48ccb13b9662fc491", 
+                "https://simple.app/circle/success", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?success=true", 
+                "https://simple.app/circle/failure", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?failure=true", 
                 DateTime.UtcNow, 
                 "BANKCARD",
-                "CLIENT-936147-bee8-4468-86f2");
- 
+                "CLIENT-5e1c37e3230144a48ccb13b9662fc491");
+            
 
             var paymentDataInfo = await _client.GetPaymentByMerchantOrderIdAsync(
                 merchantOrderId, requestId);

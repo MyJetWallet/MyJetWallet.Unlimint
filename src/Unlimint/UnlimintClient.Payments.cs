@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using MyJetWallet.Unlimint.Models;
@@ -116,7 +117,7 @@ namespace MyJetWallet.Unlimint
                 // },
                 PaymentData = new PaymentRequestPaymentData
                 {
-                    Amount = amount.ToString(),
+                    Amount = amount.ToString(CultureInfo.InvariantCulture),
                     //AuthenticationRequest = false,
                     Currency = currency,
                     //DynamicDescriptor = null,
@@ -144,7 +145,7 @@ namespace MyJetWallet.Unlimint
         /// <summary>
         /// Get a payment.
         /// </summary>
-        /// <param name="id">Unique identifier of the payment.</param>
+        /// <param name="paymentId">Unique identifier of the payment.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public WebCallResult<PaymentResponse> GetPaymentById(string paymentId, CancellationToken cancellationToken = default) =>
