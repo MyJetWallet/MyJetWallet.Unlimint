@@ -30,6 +30,9 @@ namespace MyJetWallet.Unlimint
             string description,
             string verificationUrlSuccess,
             string verificationUrlFailure,
+            string verificationUrlCancel,
+            string verificationUrlInProcess,
+            string verificationUrlReturn,
             DateTime time,
             string paymentMethod,
             string clientId,
@@ -49,6 +52,9 @@ namespace MyJetWallet.Unlimint
                      description,
                      verificationUrlSuccess,
                      verificationUrlFailure,
+                     verificationUrlCancel,
+                     verificationUrlInProcess,
+                     verificationUrlReturn,
                      time,
                      paymentMethod,
                      clientId,
@@ -70,6 +76,9 @@ namespace MyJetWallet.Unlimint
             string description,
             string verificationUrlSuccess,
             string verificationUrlFailure,
+            string verificationUrlCancel,
+            string verificationUrlInProcess,
+            string verificationUrlReturn,
             DateTime time,
             string paymentMethod,
             string clientId,
@@ -136,7 +145,10 @@ namespace MyJetWallet.Unlimint
                 ReturnUrls = new ReturnUrls()
                 {
                     SuccessUrl = verificationUrlSuccess,
-                    DeclineUrl = verificationUrlFailure
+                    DeclineUrl = verificationUrlFailure,
+                    CancelUrl = verificationUrlCancel,
+                    InprocessUrl = verificationUrlInProcess,
+                    ReturnUrl = verificationUrlReturn
                 }
             };
             return await PostAsync<PaymentGatewayCreationResponse>($"{EndpointUrl}/payments", data, cancellationToken);
