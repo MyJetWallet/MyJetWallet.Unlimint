@@ -26,7 +26,7 @@ namespace TestApp
 
             var requestId = Guid.NewGuid().ToString();
             var merchantOrderId = Guid.NewGuid().ToString();
-            var payment = await _client.CreatePaymentAsync(
+            var paymentFirst = await _client.CreatePaymentAsync(
                 merchantOrderId, 
                 requestId, 
                 "yuriy.test.2022.07.15.001@mailinator.com",
@@ -42,21 +42,55 @@ namespace TestApp
                 "jetwallet|-|5e1c37e3230144a48ccb13b9662fc491|-|SP-5e1c37e3230144a48ccb13b9662fc491", 
                 "https://simple.app/circle/success", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?success=true", 
                 "https://simple.app/circle/failure", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?failure=true",
-                "",
-                "",
-                "",
+                null,
+                null,
+                null,
                 DateTime.UtcNow, 
                 "BANKCARD",
                 "CLIENT-5e1c37e3230144a48ccb13b9662fc491");
             
-
+            var paymentFirstUrl = paymentFirst.Data.RedirectUrl;
             var paymentDataInfo = await _client.GetPaymentByMerchantOrderIdAsync(
                 merchantOrderId, requestId);
             var paymentId = paymentDataInfo?.Data?.Payments
                 .FirstOrDefault()?
                 .PaymentData
                 .Id;
+            var paymentCardToken = paymentDataInfo?.Data?.Payments
+                .FirstOrDefault()?
+                .CardAccount
+                .Token;
             var paymentInfo = await _client.GetPaymentByIdAsync(paymentId);
+            
+            // New payment with the same card
+            requestId = Guid.NewGuid().ToString();
+            merchantOrderId = Guid.NewGuid().ToString();
+            var paymentSecond = await _client.CreatePaymentByCardTokenAsync(
+                merchantOrderId, 
+                requestId, 
+                "yuriy.test.2022.07.15.001@mailinator.com",
+                //"+359885989618", 
+                null,
+                "259f6226-4231-4936-8bf4-19f5cc900109", 
+                "234.22.12.01", 
+                1000m, 
+                "USD", 
+                "jetwallet|-|5e1c37e3230144a48ccb13b9662fc491|-|SP-5e1c37e3230144a48ccb13b9662fc491", 
+                paymentCardToken,
+                "01" == "04", 
+                "jetwallet|-|5e1c37e3230144a48ccb13b9662fc491|-|SP-5e1c37e3230144a48ccb13b9662fc491", 
+                "https://simple.app/circle/success", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?success=true", 
+                "https://simple.app/circle/failure", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?failure=true",
+                null,
+                null,
+                null,
+                DateTime.UtcNow, 
+                "BANKCARD",
+                "CLIENT-5e1c37e3230144a48ccb13b9662fc491");
+            var paymentSecondUrl = paymentSecond.Data.RedirectUrl;
+            
+            var paymentSecondDataInfo = await _client.GetPaymentByMerchantOrderIdAsync(
+                merchantOrderId, requestId);
         }
 
         private static async Task TestPublicKey()
