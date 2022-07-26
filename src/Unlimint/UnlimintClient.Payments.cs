@@ -93,55 +93,24 @@ namespace MyJetWallet.Unlimint
                 },
                 Customer = new PaymentRequestCustomer
                 {
-                    //BirthDate = null,
-                    //DocumentType = null,
                     Email = email,
-                    //FirstName = null,
-                    //FullName = null,
-                    //HomePhone = null,
                     Id = clientId,
-                    //Identity = null,
-                    //LastName = null,
-                    //LivingAddress = null,
-                    //Locale = null,
                     Phone = phoneNumber,
-                    //WorkPhone = null,
                     Ip = ipAddress
                 },
                 MerchantOrder = new PaymentRequestMerchantOrder
                 {
-                    //CryptocurrencyIndicator = false,
                     Description = description,
-                    //Flights = null,
                     Id = merchantOrderId,
-                    //Items = null,
-                    //ShippingAddress = null
                 },
-                //CardAccount = new PaymentRequestCardAccount
-                //{
-                    // BillingAddress = null,
-                    // Card = null,
-                    // EncryptedCardData = null,
-                    //Token = cardToken
-                //},
                 PaymentData = new PaymentRequestPaymentData
                 {
                     Amount = amount.ToString(CultureInfo.InvariantCulture),
-                    //AuthenticationRequest = false,
                     Currency = currency,
-                    //DynamicDescriptor = null,
-                    //EncryptedData = null,
                     GenerateToken = generateToken,
-                    //InstallmentAmount = 0,
-                    //InstallmentType = "IF",
-                    //Installments = 1,
                     Note = description,
-                    //Preauth = true,
-                    //ThreeDsChallengeIndicator = useThreeDsChallengeIndicator == true ? "04" : "01",
-                    //TransType = (TransTypeEnum)0
                 },
                 PaymentMethod = paymentMethod,
-                //PaymentMethods = null,
                 ReturnUrls = new ReturnUrls()
                 {
                     SuccessUrl = verificationUrlSuccess,
@@ -234,55 +203,28 @@ namespace MyJetWallet.Unlimint
                 },
                 Customer = new PaymentRequestCustomer
                 {
-                    //BirthDate = null,
-                    //DocumentType = null,
                     Email = email,
-                    //FirstName = null,
-                    //FullName = null,
-                    //HomePhone = null,
                     Id = clientId,
-                    //Identity = null,
-                    //LastName = null,
-                    //LivingAddress = null,
-                    //Locale = null,
                     Phone = phoneNumber,
-                    //WorkPhone = null,
                     Ip = ipAddress
                 },
                 MerchantOrder = new PaymentRequestMerchantOrder
                 {
-                    //CryptocurrencyIndicator = false,
                     Description = description,
-                    //Flights = null,
                     Id = merchantOrderId,
-                    //Items = null,
-                    //ShippingAddress = null
                 },
                 CardAccount = new PaymentRequestCardAccount
                 {
-                    // BillingAddress = null,
-                    // Card = null,
-                    // EncryptedCardData = null,
                     Token = cardToken
                 },
                 PaymentData = new PaymentRequestPaymentData
                 {
                     Amount = amount.ToString(CultureInfo.InvariantCulture),
-                    //AuthenticationRequest = false,
                     Currency = currency,
-                    //DynamicDescriptor = null,
-                    //EncryptedData = null,
                     GenerateToken = false,
-                    //InstallmentAmount = 0,
-                    //InstallmentType = "IF",
-                    //Installments = 1,
                     Note = description,
-                    //Preauth = true,
-                    //ThreeDsChallengeIndicator = useThreeDsChallengeIndicator == true ? "04" : "01",
-                    //TransType = (TransTypeEnum)0
                 },
                 PaymentMethod = paymentMethod,
-                //PaymentMethods = null,
                 ReturnUrls = new ReturnUrls()
                 {
                     SuccessUrl = verificationUrlSuccess,
@@ -292,6 +234,7 @@ namespace MyJetWallet.Unlimint
                     ReturnUrl = verificationUrlReturn
                 }
             };
+
             return await PostAsync<PaymentGatewayCreationResponse>($"{EndpointUrl}/payments", data, cancellationToken);
         }
 

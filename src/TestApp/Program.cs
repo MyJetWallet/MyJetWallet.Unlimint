@@ -16,8 +16,8 @@ namespace TestApp
         static async Task Main(string[] args)
         {
             //TODO: Remove credentials
-            var terminalcCode = "***";
-            var password = "***";
+            var terminalcCode = Environment.GetEnvironmentVariable("UNLIMINT_TERMINAL_CODE");
+            var password = Environment.GetEnvironmentVariable("UNLIMINT_PASSWORD");
             
             _authClient = new UnlimintAuthClient(terminalcCode, password, UnlimintNetwork.Test);
             _client = new UnlimintClient(null, UnlimintNetwork.Test);
