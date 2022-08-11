@@ -111,7 +111,7 @@ namespace MyJetWallet.Unlimint
                     Currency = currency,
                     GenerateToken = generateToken,
                     Note = description,
-                    ThreeDsChallengeIndicator = "04"
+                    ThreeDsChallengeIndicator = useThreeDsChallengeIndicator == false ? "01" : "04"
                 },
                 PaymentMethod = paymentMethod,
                 ReturnUrls = new ReturnUrls()
@@ -184,7 +184,9 @@ namespace MyJetWallet.Unlimint
                     Amount = amount.ToString(CultureInfo.InvariantCulture),
                     Currency = currency,
                     Note = description,
-                    ThreeDsChallengeIndicator = "04"
+                    ThreeDsChallengeIndicator = useThreeDsChallengeIndicator == false ? "01" : "04",
+                    // InstallmentType = "IF",
+                    // InstallmentAmount = amount
                 },
                 PaymentMethod = "BOLETO",
                 ReturnUrls = new ReturnUrls()
@@ -301,7 +303,7 @@ namespace MyJetWallet.Unlimint
                     Currency = currency,
                     GenerateToken = false,
                     Note = description,
-                    ThreeDsChallengeIndicator = "04"
+                    ThreeDsChallengeIndicator = useThreeDsChallengeIndicator == false ? "01" : "04"
                 },
                 PaymentMethod = paymentMethod,
                 ReturnUrls = new ReturnUrls()
