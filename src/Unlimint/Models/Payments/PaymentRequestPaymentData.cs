@@ -22,7 +22,7 @@ public class PaymentRequestPaymentData
     
     [JsonProperty("generate_token", NullValueHandling = NullValueHandling.Ignore)] 
     public bool GenerateToken { get; set; }
-    
+
     // [JsonProperty("installment_amount", NullValueHandling = NullValueHandling.Ignore)] 
     // public decimal? InstallmentAmount { get; set; }
     //
@@ -35,13 +35,13 @@ public class PaymentRequestPaymentData
     [JsonProperty("note", NullValueHandling = NullValueHandling.Ignore)] 
     public string Note { get; set; }
     
-    // [JsonProperty("preauth", NullValueHandling = NullValueHandling.Ignore)] 
-    // public bool Preauth { get; set; }
+    //[JsonProperty("preauth", NullValueHandling = NullValueHandling.Ignore)] 
+    //public bool Preauth { get; set; }
     
     [JsonProperty("three_ds_challenge_indicator", NullValueHandling = NullValueHandling.Ignore)]
     public string ThreeDsChallengeIndicator { get; set; }
     
-    // [JsonProperty("trans_type", NullValueHandling = NullValueHandling.Ignore)] 
-    // [JsonConverter(typeof(TransTypeEnumConverter))]
-    // public TransTypeEnum? TransType { get; set; }
+    [JsonProperty("trans_type", NullValueHandling = NullValueHandling.Ignore)] 
+    [JsonConverter(typeof(TransTypeEnumConverter))]
+    public TransTypeEnum? TransType { get; set; }
 }
