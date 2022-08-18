@@ -121,7 +121,8 @@ namespace MyJetWallet.Unlimint
                     CancelUrl = verificationUrlCancel,
                     InprocessUrl = verificationUrlInProcess,
                     ReturnUrl = verificationUrlReturn
-                }
+                },
+                CardAccount = new PaymentRequestCardAccount()
             };
             return await PostAsync<PaymentGatewayCreationResponse>($"{EndpointUrl}/payments", data, cancellationToken);
         }
