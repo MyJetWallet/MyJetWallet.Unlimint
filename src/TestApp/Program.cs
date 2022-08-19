@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.VisualBasic;
 using MyJetWallet.Unlimint;
 using MyJetWallet.Unlimint.Models;
+using MyJetWallet.Unlimint.Models.Payments;
 
 namespace TestApp
 {
@@ -32,6 +33,8 @@ namespace TestApp
             var paymentInf3 = await _client.GetPaymentByIdAsync("13391879");
             var paymentInf4 = await _client.GetPaymentByIdAsync("13391877");
             var paymentInf5 = await _client.GetPaymentByIdAsync("13427293");
+            var paymentInf6 = await _client.GetPaymentByIdAsync("13455113");
+            
             
             //
             // var paymentDataInfo2 = await _client.GetPaymentByMerchantOrderIdAsync(
@@ -39,32 +42,32 @@ namespace TestApp
             //
             var requestId = Guid.NewGuid().ToString();
             var merchantOrderId = Guid.NewGuid().ToString();
-            // var paymentFirst = await _client.CreatePaymentAsync(
-            //     merchantOrderId, 
-            //     requestId, 
-            //     "yuriy.test.2022.07.15.001@mailinator.com",
-            //     //"+359885989618", 
-            //     null,
-            //     "259f6226-4231-4936-8bf4-19f5cc900109", 
-            //     "234.22.12.01", 
-            //     100m, 
-            //     "USD", 
-            //     "jetwallet|-|5e1c37e3230144a48ccb13b9662fc491|-|SP-5e1c37e3230144a48ccb13b9662fc491", 
-            //     true, 
-            //     true, 
-            //     "jetwallet|-|5e1c37e3230144a48ccb13b9662fc491|-|SP-5e1c37e3230144a48ccb13b9662fc491", 
-            //     "https://simple.app/circle/success", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?success=true", 
-            //     "https://simple.app/circle/failure", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?failure=true",
-            //     null,
-            //     null,
-            //     null,
-            //     DateTime.UtcNow, 
-            //     "BANKCARD",
-            //     "CLIENT-5e1c37e3230144a48ccb13b9662fc491");
-            //
-            // var paymentFirstUrl = paymentFirst.Data.RedirectUrl;
-            // var paymentDataInfo = await _client.GetPaymentByMerchantOrderIdAsync(
-            //     merchantOrderId, requestId);
+            var paymentFirst = await _client.CreatePaymentAsync(
+                merchantOrderId, 
+                requestId, 
+                "yuriy.test.2022.07.15.001@mailinator.com",
+                //"+359885989618", 
+                null,
+                "259f6226-4231-4936-8bf4-19f5cc900109", 
+                "234.22.12.01", 
+                100m, 
+                "USD", 
+                "jetwallet|-|5e1c37e3230144a48ccb13b9662fc491|-|SP-5e1c37e3230144a48ccb13b9662fc491", 
+                true, 
+                true, 
+                "jetwallet|-|5e1c37e3230144a48ccb13b9662fc491|-|SP-5e1c37e3230144a48ccb13b9662fc491", 
+                "https://simple.app/circle/success", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?success=true", 
+                "https://simple.app/circle/failure", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?failure=true",
+                null,
+                null,
+                null,
+                DateTime.UtcNow, 
+                "BANKCARD",
+                "CLIENT-5e1c37e3230144a48ccb13b9662fc491");
+            
+            var paymentFirstUrl = paymentFirst.Data.RedirectUrl;
+            var paymentDataInfo = await _client.GetPaymentByMerchantOrderIdAsync(
+                merchantOrderId, requestId);
             // var paymentId = paymentDataInfo?.Data?.Payments
             //     .FirstOrDefault()?
             //     .PaymentData
@@ -158,13 +161,8 @@ namespace TestApp
                 PaymentAlternativeType.Boleto,
                 merchantOrderId, 
                 requestId, 
-                email,
-                phoneNumber, 
-                sessionId, 
-                ipAddress, 
                 amount, 
                 currency, 
-                fullName,
                 useThreeDsChallengeIndicator, 
                 description, 
                 verificationUrlSuccess, 
@@ -172,9 +170,27 @@ namespace TestApp
                 verificationUrlCancel,
                 verificationUrlInProcess,
                 verificationUrlReturn,
-                time,clientId,
-                identity,
-                zip,
+                time,
+                new PaymentRequestCustomer
+                {
+                    //BirthDate = null,
+                    //DocumentType = null,
+                    Email = email,
+                    //FirstName = null,
+                    FullName = fullName,
+                    //HomePhone = null,
+                    Id = clientId,
+                    Identity = identity,
+                    //LastName = null,
+                    LivingAddress = new PaymentRequestLivingAddress()
+                    {
+                        Zip = zip
+                    },
+                    //Locale = null,
+                    //Phone = null,
+                    //WorkPhone = null,
+                    Ip = ipAddress
+                },
                 cancellationToken);
             
             var paymentFirstBoletoUrl = paymentFirstBoleto.Data.RedirectUrl;

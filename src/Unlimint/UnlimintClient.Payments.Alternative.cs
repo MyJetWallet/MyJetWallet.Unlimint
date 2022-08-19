@@ -16,30 +16,22 @@ namespace MyJetWallet.Unlimint
 
         public WebCallResult<PaymentGatewayCreationResponse> CreateAlternativePayment(
             PaymentAlternativeType paymentAlternativeType, string merchantOrderId,
-            string requestId, string email, string phoneNumber, string sessionId, string ipAddress, decimal amount,
-            string currency, string fullName, bool useThreeDsChallengeIndicator, string description,
+            string requestId, decimal amount,
+            string currency, bool useThreeDsChallengeIndicator, string description,
             string verificationUrlSuccess, string verificationUrlFailure, string verificationUrlCancel,
-            string verificationUrlInProcess, string verificationUrlReturn, DateTime time, string clientId,
-            string identity,
-            string zip, CancellationToken cancellationToken = default) =>
-            CreateAlternativePaymentAsync(paymentAlternativeType, merchantOrderId, requestId, email, phoneNumber,
-                sessionId,
-                ipAddress, amount, currency, fullName, useThreeDsChallengeIndicator,
+            string verificationUrlInProcess, string verificationUrlReturn, DateTime time, 
+            PaymentRequestCustomer customer, CancellationToken cancellationToken = default) =>
+            CreateAlternativePaymentAsync(paymentAlternativeType, merchantOrderId, requestId, amount,
+                currency, useThreeDsChallengeIndicator,
                 description, verificationUrlSuccess, verificationUrlFailure, verificationUrlCancel,
-                verificationUrlInProcess, verificationUrlReturn, time, clientId, identity,
-                zip, cancellationToken = default).Result;
+                verificationUrlInProcess, verificationUrlReturn, time, customer, cancellationToken = default).Result;
 
         public async Task<WebCallResult<PaymentGatewayCreationResponse>> CreateAlternativePaymentAsync(
             PaymentAlternativeType paymentAlternativeType,
             string merchantOrderId,
             string requestId,
-            string email,
-            string phoneNumber,
-            string sessionId,
-            string ipAddress,
             decimal amount,
             string currency,
-            string fullName,
             bool useThreeDsChallengeIndicator,
             string description,
             string verificationUrlSuccess,
@@ -48,9 +40,7 @@ namespace MyJetWallet.Unlimint
             string verificationUrlInProcess,
             string verificationUrlReturn,
             DateTime time,
-            string clientId,
-            string identity,
-            string zip,
+            PaymentRequestCustomer customer,
             CancellationToken cancellationToken = default)
         {
             PaymentRequest request = null;
@@ -59,13 +49,8 @@ namespace MyJetWallet.Unlimint
                 case PaymentAlternativeType.Boleto:
                     request = CreateBoletoPaymentRequestAsync(merchantOrderId,
                         requestId,
-                        email,
-                        phoneNumber,
-                        sessionId,
-                        ipAddress,
                         amount,
                         currency,
-                        fullName,
                         useThreeDsChallengeIndicator,
                         description,
                         verificationUrlSuccess,
@@ -73,9 +58,8 @@ namespace MyJetWallet.Unlimint
                         verificationUrlCancel,
                         verificationUrlInProcess,
                         verificationUrlReturn,
-                        time, clientId,
-                        identity,
-                        zip,
+                        time, 
+                        customer,
                         cancellationToken);
                     break;
                 default:
@@ -89,13 +73,8 @@ namespace MyJetWallet.Unlimint
         private PaymentRequest CreateBoletoPaymentRequestAsync(
             string merchantOrderId,
             string requestId,
-            string email,
-            string phoneNumber,
-            string sessionId,
-            string ipAddress,
             decimal amount,
             string currency,
-            string fullName,
             bool useThreeDsChallengeIndicator,
             string description,
             string verificationUrlSuccess,
@@ -104,9 +83,7 @@ namespace MyJetWallet.Unlimint
             string verificationUrlInProcess,
             string verificationUrlReturn,
             DateTime time,
-            string clientId,
-            string identity,
-            string zip,
+            PaymentRequestCustomer customer,
             CancellationToken cancellationToken = default)
         {
             var request = new PaymentRequest
@@ -115,23 +92,6 @@ namespace MyJetWallet.Unlimint
                 {
                     Id = requestId,
                     Time = time
-                },
-                Customer = new PaymentRequestCustomer
-                {
-                    Email = email,
-                    Id = clientId,
-                    Phone = phoneNumber,
-                    Ip = ipAddress,
-                    FullName = fullName,
-                    Identity = identity,
-                    LivingAddress = new PaymentRequestLivingAddress
-                    {
-                        Address = "Rua Visconde de Porto Seguro 1238",
-                        City = "Sao Paulo",
-                        Country = "Brazil",
-                        State = "SP",
-                        Zip = zip
-                    }
                 },
                 MerchantOrder = new PaymentRequestMerchantOrder
                 {
@@ -154,6 +114,7 @@ namespace MyJetWallet.Unlimint
                     InprocessUrl = verificationUrlInProcess,
                     ReturnUrl = verificationUrlReturn
                 },
+                Customer = customer
             };
             return request;
         }

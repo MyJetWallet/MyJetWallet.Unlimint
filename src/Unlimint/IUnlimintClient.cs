@@ -157,15 +157,9 @@ namespace MyJetWallet.Unlimint
         /// <param name="paymentAlternativeType"></param>
         /// <param name="merchantOrderId">Unique idempotency key. This key is utilized to ensure exactly-once execution of mutating requests.</param>
         /// <param name="requestId">Unique identifier of the public key used in encryption.</param>
-        /// <param name="email">Email of the user</param>
-        /// <param name="phoneNumber">Phone number of the user in E.164 format. We recommend using a library such as libphonenumber to parse and validate phone numbers.</param>
-        /// <param name="sessionId">Hash of the session identifier; typically of the end user. This helps us make risk decisions and prevent fraud. IMPORTANT: Please hash the session identifier to prevent sending us actual session identifiers.</param>
-        /// <param name="ipAddress">Single IPv4 or IPv6 address of user</param>
         /// <param name="amount">Magnitude of the amount, in units of the currency, with a ..</param>
         /// <param name="currency">Currency code.</param>
-        /// <param name="sourceId">Unique identifier for the source.</param>
-        /// <param name="cardToken"></param>
-        /// <param name="threeDsChallengeIndicator"></param>
+        /// <param name="useThreeDsChallengeIndicator"></param>
         /// <param name="description">Description of the payment with length restriction of 240 characters.</param>
         /// <param name="verificationUrlSuccess"></param>
         /// <param name="verificationUrlFailure"></param>
@@ -173,21 +167,22 @@ namespace MyJetWallet.Unlimint
         /// <param name="verificationUrlInProcess"></param>
         /// <param name="verificationUrlReturn"></param>
         /// <param name="time"></param>
-        /// <param name="paymentMethod"></param>
-        /// <param name="clientId"></param>
+        /// <param name="livingAddress"></param>
+        /// <param name="customer"></param>
         /// <param name="cancellationToken"></param>
+        /// <param name="email">Email of the user</param>
+        /// <param name="phoneNumber">Phone number of the user in E.164 format. We recommend using a library such as libphonenumber to parse and validate phone numbers.</param>
+        /// <param name="sourceId">Unique identifier for the source.</param>
+        /// <param name="cardToken"></param>
+        /// <param name="threeDsChallengeIndicator"></param>
+        /// <param name="paymentMethod"></param>
         /// <returns></returns>
         WebCallResult<PaymentGatewayCreationResponse> CreateAlternativePayment(
             PaymentAlternativeType paymentAlternativeType,
             string merchantOrderId,
             string requestId,
-            string email,
-            string phoneNumber,
-            string sessionId,
-            string ipAddress,
             decimal amount,
             string currency,
-            string fullName,
             bool useThreeDsChallengeIndicator,
             string description,
             string verificationUrlSuccess,
@@ -196,22 +191,15 @@ namespace MyJetWallet.Unlimint
             string verificationUrlInProcess,
             string verificationUrlReturn,
             DateTime time,
-            string clientId,
-            string identity,
-            string zip,
+            PaymentRequestCustomer customer,
             CancellationToken cancellationToken = default);
         
         Task<WebCallResult<PaymentGatewayCreationResponse>> CreateAlternativePaymentAsync(
             PaymentAlternativeType paymentAlternativeType,
             string merchantOrderId,
             string requestId,
-            string email,
-            string phoneNumber,
-            string sessionId,
-            string ipAddress,
             decimal amount,
             string currency,
-            string fullName,
             bool useThreeDsChallengeIndicator,
             string description,
             string verificationUrlSuccess,
@@ -220,9 +208,7 @@ namespace MyJetWallet.Unlimint
             string verificationUrlInProcess,
             string verificationUrlReturn,
             DateTime time,
-            string clientId,
-            string identity,
-            string zip,
+            PaymentRequestCustomer customer,
             CancellationToken cancellationToken = default);
 
         /// <summary>
