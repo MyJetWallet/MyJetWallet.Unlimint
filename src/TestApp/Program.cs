@@ -25,6 +25,10 @@ namespace TestApp
             _authClient = new UnlimintAuthClient(terminalcCode, password, UnlimintNetwork.Test);
             _client = new UnlimintClient(null, UnlimintNetwork.Test);
             var token = await _authClient.GetAuthorizationTokenAsync();
+            if (!token.Success || string.IsNullOrEmpty(token.Data?.AccessToken))
+            {
+                Console.WriteLine(token.Message);
+            }
             _client.SetAccessToken(token?.Data?.AccessToken);
 
             

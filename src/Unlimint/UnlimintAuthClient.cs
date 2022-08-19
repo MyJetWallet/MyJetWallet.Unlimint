@@ -94,8 +94,6 @@ namespace MyJetWallet.Unlimint
 
             client.BaseAddress = new Uri(this.EndpointUrl);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            // client.DefaultRequestHeaders.Authorization =
-            //     new AuthenticationHeaderValue("Bearer", this.AccessToken.SecureStringToString());
 
             _lastHttpClient?.Dispose();
             _lastHttpClient = _httpClient;
@@ -130,10 +128,15 @@ namespace MyJetWallet.Unlimint
                 return new WebCallResult<T>(response, default, HttpStatusCode.NotFound, "Empty Response");
             }
 
+            var errorMessage = string.Empty;
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                errorMessage = content;
+            }
+            
             var obj = JsonConvert.DeserializeObject<T>(content);
-            var objCallResult = new CallResult<T>(obj, (int)response.StatusCode, String.Empty);
+            var objCallResult = new CallResult<T>(obj, (int)response.StatusCode, errorMessage);
             return new WebCallResult<T>(response, objCallResult);
-            //return WebCallResult<T>(response, JsonConvert.DeserializeObject<CallResult<T>>(content));
         }
 
         private void ThrowErrorExceptionIfEnabled(HttpStatusCode code, string message)
