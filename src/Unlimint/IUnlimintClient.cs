@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MyJetWallet.Unlimint.Models;
@@ -178,7 +179,7 @@ namespace MyJetWallet.Unlimint
         /// <param name="paymentMethod"></param>
         /// <returns></returns>
         WebCallResult<PaymentGatewayCreationResponse> CreateAlternativePayment(
-            PaymentAlternativeType paymentAlternativeType,
+            List<string> alternativeMethods,
             string merchantOrderId,
             string requestId,
             decimal amount,
@@ -195,7 +196,7 @@ namespace MyJetWallet.Unlimint
             CancellationToken cancellationToken = default);
         
         Task<WebCallResult<PaymentGatewayCreationResponse>> CreateAlternativePaymentAsync(
-            PaymentAlternativeType paymentAlternativeType,
+            List<string> alternativeMethods,
             string merchantOrderId,
             string requestId,
             decimal amount,

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading;
@@ -18,10 +19,23 @@ namespace TestApp
 
         static async Task Main(string[] args)
         {
+            await TestAlternativeMethodInBpl("es", "BRL");
+            await TestAlternativeMethodInBpl("it", "BRL");
+            await TestAlternativeMethodInBpl("ru", "BRL");
+
+            await TestAlternativeMethodInBpl("es", "MXN");
+            await TestAlternativeMethodInBpl("it", "MXN");
+            await TestAlternativeMethodInBpl("ru", "MXN");
+
+            await TestAlternativeMethodInBpl("es", "COP");
+            await TestAlternativeMethodInBpl("it", "COP");
+            await TestAlternativeMethodInBpl("ru", "COP");
+            
+            
             //TODO: Remove credentials
             var terminalcCode = Environment.GetEnvironmentVariable("UNLIMINT_TERMINAL_CODE");
             var password = Environment.GetEnvironmentVariable("UNLIMINT_PASSWORD");
-            
+
             _authClient = new UnlimintAuthClient(terminalcCode, password, UnlimintNetwork.Test);
             _client = new UnlimintClient(null, UnlimintNetwork.Test);
             var token = await _authClient.GetAuthorizationTokenAsync();
@@ -29,17 +43,18 @@ namespace TestApp
             {
                 Console.WriteLine(token.Message);
             }
+
             _client.SetAccessToken(token?.Data?.AccessToken);
 
-            
+
             var paymentInf1 = await _client.GetPaymentByIdAsync("13391885");
             var paymentInf2 = await _client.GetPaymentByIdAsync("13391861");
             var paymentInf3 = await _client.GetPaymentByIdAsync("13391879");
             var paymentInf4 = await _client.GetPaymentByIdAsync("13391877");
             var paymentInf5 = await _client.GetPaymentByIdAsync("13427293");
             var paymentInf6 = await _client.GetPaymentByIdAsync("13455113");
-            
-            
+
+
             //
             // var paymentDataInfo2 = await _client.GetPaymentByMerchantOrderIdAsync(
             //     "879f1aa2-8145-4651-a6ef-bffa411ca741", "13391861");
@@ -108,101 +123,13 @@ namespace TestApp
             //     "BANKCARD",
             //     "CLIENT-5e1c37e3230144a48ccb13b9662fc491");
             // var paymentSecondUrl = paymentSecond.Data.RedirectUrl;
-            
+
             // var paymentSecondDataInfo = await _client.GetPaymentByMerchantOrderIdAsync(
             //     merchantOrderId, requestId);
             //
             //
-            
-            requestId = Guid.NewGuid().ToString();
-            merchantOrderId = Guid.NewGuid().ToString();
-            await TestBoletoMethod(
-                merchantOrderId, 
-                requestId, 
-                "yuriy.test.2022.07.15.001@mailinator.com",
-                "+359885989618", 
-                "259f6226-4231-4936-8bf4-19f5cc900109", 
-                "234.22.12.01", 
-                10m, 
-                "EUR",
-                "Yuriy Test",
-                true, 
-                "Simple.app order description", 
-                "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?success=true", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?success=true", 
-                "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?failure=true", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?failure=true",
-                "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?cancel=true",
-                "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?inproccess=true",
-                "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?return=true",
-                DateTime.UtcNow, 
-                "CLIENT-5e1c37e3230144a48ccb13b9662fc491",
-                "31130088910", 
-                "04642-000");
         }
 
-        private static async Task TestBoletoMethod(string merchantOrderId,
-            string requestId,
-            string email,
-            string phoneNumber,
-            string sessionId,
-            string ipAddress,
-            decimal amount,
-            string currency,
-            string fullName,
-            bool useThreeDsChallengeIndicator,
-            string description,
-            string verificationUrlSuccess,
-            string verificationUrlFailure,
-            string verificationUrlCancel,
-            string verificationUrlInProcess,
-            string verificationUrlReturn,
-            DateTime time,
-            string clientId,
-            string identity,
-            string zip,
-            CancellationToken cancellationToken = default)
-        {
-            var paymentFirstBoleto = await _client.CreateAlternativePaymentAsync(
-                PaymentAlternativeType.Boleto,
-                merchantOrderId, 
-                requestId, 
-                amount, 
-                currency, 
-                useThreeDsChallengeIndicator, 
-                description, 
-                verificationUrlSuccess, 
-                verificationUrlFailure,
-                verificationUrlCancel,
-                verificationUrlInProcess,
-                verificationUrlReturn,
-                time,
-                new PaymentRequestCustomer
-                {
-                    BirthDate = DateTime.UtcNow.AddYears(-33).ToString("yyyy-MM-dd"),
-                    //DocumentType = null,
-                    Email = email,
-                    //FirstName = null,
-                    FullName = fullName,
-                    //HomePhone = null,
-                    Id = clientId,
-                    Identity = identity,
-                    //LastName = null,
-                    LivingAddress = new PaymentRequestLivingAddress()
-                    {
-                        Zip = zip
-                    },
-                    //Locale = null,
-                    Phone = phoneNumber,
-                    //WorkPhone = null,
-                    Ip = ipAddress
-                },
-                cancellationToken);
-            
-            var paymentFirstBoletoUrl = paymentFirstBoleto.Data.RedirectUrl;
-            
-            var paymentFirstBoletoDataInfo = await _client.GetPaymentByMerchantOrderIdAsync(
-                merchantOrderId, requestId);
-        }
-        
         private static async Task TestPublicKey()
         {
             var key = await _authClient.GetAuthorizationTokenAsync();
@@ -211,5 +138,76 @@ namespace TestApp
                  WriteIndented = true
              }));
         }
+        
+        
+        private static async Task TestAlternativeMethodInBpl(string locale, string currency)
+        {
+            var terminalcCode = Environment.GetEnvironmentVariable("UNLIMINT_TERMINAL_CODE_" + currency);
+            var password = Environment.GetEnvironmentVariable("UNLIMINT_PASSWORD_" + currency);
+            
+            var authClient = new UnlimintAuthClient(terminalcCode, password, UnlimintNetwork.Test);
+            var client = new UnlimintClient(null, UnlimintNetwork.Test);
+            
+            var token = await authClient.GetAuthorizationTokenAsync();
+            if (!token.Success || string.IsNullOrEmpty(token.Data?.AccessToken))
+            {
+                Console.WriteLine(token.Message);
+            }
+            client.SetAccessToken(token?.Data?.AccessToken);
+            
+            var requestId = Guid.NewGuid().ToString();
+            var merchantOrderId = Guid.NewGuid().ToString();
+            
+            var paymentAlternativeResponse = await client.CreateAlternativePaymentAsync(
+                new List<string>(){"DAVIVIENDA", "BALOTO", "BOLETO","WALMART", "COMERCIALMEXICANA"},
+                merchantOrderId, 
+                requestId, 
+                10m, 
+                currency, 
+                true, 
+                "Simple.app order description", 
+                "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?success=true", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?success=true", 
+                "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?failure=true", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?failure=true",
+                "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?cancel=true",
+                "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?inproccess=true",
+                "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?return=true",
+                DateTime.UtcNow, 
+                new PaymentRequestCustomer
+                {
+                    BirthDate = DateTime.UtcNow.AddYears(-33).ToString("yyyy-MM-dd"),
+                    DocumentType = null,
+                    Email = "yuriy.test.2022.07.15.001@mailinator.com",
+                    FirstName = "Yuriy",
+                    FullName = "Yuriy Test",
+                    //HomePhone = null,
+                    Id = "5e1c37e3230144a48ccb13b9662fc491",
+                    Identity = "Test",
+                    LastName = "Test",
+                    LivingAddress = new PaymentRequestLivingAddress()
+                    {
+                        Address = "Rua Visconde de Porto Seguro 1238",
+                        City = "Sao Paulo",
+                        Country = "Brazil",
+                        State = "SP",
+                        Zip = "04642-000"
+                    },
+                    Locale = locale,
+                    Phone = "+359885989618",
+                    //WorkPhone = null,
+                    Ip = "123.123.123.123"
+                }//,cancellationToken
+                );
+            
+            
+            if (!paymentAlternativeResponse.Success)
+            {
+                Console.WriteLine(paymentAlternativeResponse.Message);
+            }
+            var paymentAlternativeResponseUrl = paymentAlternativeResponse.Data.RedirectUrl;
+            
+            var paymentAlternativeInfo = await client.GetPaymentByMerchantOrderIdAsync(
+                merchantOrderId, requestId);
+        }
+        
     }
 }

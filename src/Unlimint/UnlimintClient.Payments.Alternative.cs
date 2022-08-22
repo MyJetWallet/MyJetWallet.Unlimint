@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO.Compression;
 using System.Threading;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 using MyJetWallet.Unlimint.Models;
 using MyJetWallet.Unlimint.Models.Payments;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Security.Principal;
 
 namespace MyJetWallet.Unlimint
@@ -15,19 +17,19 @@ namespace MyJetWallet.Unlimint
         #region PaymentsAlternative
 
         public WebCallResult<PaymentGatewayCreationResponse> CreateAlternativePayment(
-            PaymentAlternativeType paymentAlternativeType, string merchantOrderId,
+            List<string> paymentAlternativeMethods, string merchantOrderId,
             string requestId, decimal amount,
             string currency, bool useThreeDsChallengeIndicator, string description,
             string verificationUrlSuccess, string verificationUrlFailure, string verificationUrlCancel,
             string verificationUrlInProcess, string verificationUrlReturn, DateTime time,
             PaymentRequestCustomer customer, CancellationToken cancellationToken = default) =>
-            CreateAlternativePaymentAsync(paymentAlternativeType, merchantOrderId, requestId, amount,
+            CreateAlternativePaymentAsync(paymentAlternativeMethods, merchantOrderId, requestId, amount,
                 currency, useThreeDsChallengeIndicator,
                 description, verificationUrlSuccess, verificationUrlFailure, verificationUrlCancel,
                 verificationUrlInProcess, verificationUrlReturn, time, customer, cancellationToken = default).Result;
 
         public async Task<WebCallResult<PaymentGatewayCreationResponse>> CreateAlternativePaymentAsync(
-            PaymentAlternativeType paymentAlternativeType,
+            List<string> methods,
             string merchantOrderId,
             string requestId,
             decimal amount,
@@ -42,6 +44,80 @@ namespace MyJetWallet.Unlimint
             DateTime time,
             PaymentRequestCustomer customer,
             CancellationToken cancellationToken = default)
+        {
+            var request = CreateAlternativePaymentRequest(
+                methods,
+                merchantOrderId,
+                requestId,
+                amount,
+                currency,
+                useThreeDsChallengeIndicator,
+                description,
+                verificationUrlSuccess,
+                verificationUrlFailure,
+                verificationUrlCancel,
+                verificationUrlInProcess,
+                verificationUrlReturn,
+                time,
+                customer,
+                cancellationToken);
+            return await PostAsync<PaymentGatewayCreationResponse>($"{EndpointUrl}/payments", request,
+                cancellationToken);
+        }
+
+        private PaymentRequest CreateAlternativePaymentRequest(
+            List<string> paymentMethods,
+            string merchantOrderId,
+            string requestId,
+            decimal amount,
+            string currency,
+            bool useThreeDsChallengeIndicator,
+            string description,
+            string verificationUrlSuccess,
+            string verificationUrlFailure,
+            string verificationUrlCancel,
+            string verificationUrlInProcess,
+            string verificationUrlReturn,
+            DateTime time,
+            PaymentRequestCustomer customer,
+            CancellationToken cancellationToken = default)
+        {
+            var request = new PaymentRequest
+            {
+                Request = new Request
+                {
+                    Id = requestId,
+                    Time = time
+                },
+                MerchantOrder = new PaymentRequestMerchantOrder
+                {
+                    Description = description,
+                    Id = merchantOrderId,
+                },
+                PaymentData = new PaymentRequestPaymentData
+                {
+                    Amount = amount.ToString(CultureInfo.InvariantCulture),
+                    Currency = currency,
+                    Note = description,
+                    ThreeDsChallengeIndicator = useThreeDsChallengeIndicator == false ? "01" : "04"
+                },
+                PaymentMethod = null,
+                PaymentMethods = paymentMethods,
+                ReturnUrls = new ReturnUrls()
+                {
+                    SuccessUrl = verificationUrlSuccess,
+                    DeclineUrl = verificationUrlFailure,
+                    CancelUrl = verificationUrlCancel,
+                    InprocessUrl = verificationUrlInProcess,
+                    ReturnUrl = verificationUrlReturn
+                },
+                Customer = customer
+            };
+            return request;
+        }
+
+
+        public static string ToString(PaymentAlternativeType paymentAlternativeType)
         {
             string method;
             switch (paymentAlternativeType)
@@ -173,75 +249,9 @@ namespace MyJetWallet.Unlimint
                     throw new Exception($"Unlimited unknown method {paymentAlternativeType.ToString()}");
             }
 
-            var request = CreateAlternativePaymentRequest(
-                method,
-                merchantOrderId,
-                requestId,
-                amount,
-                currency,
-                useThreeDsChallengeIndicator,
-                description,
-                verificationUrlSuccess,
-                verificationUrlFailure,
-                verificationUrlCancel,
-                verificationUrlInProcess,
-                verificationUrlReturn,
-                time,
-                customer,
-                cancellationToken);
-            return await PostAsync<PaymentGatewayCreationResponse>($"{EndpointUrl}/payments", request,
-                cancellationToken);
-        }
-
-        private PaymentRequest CreateAlternativePaymentRequest(
-            string paymentMethod,
-            string merchantOrderId,
-            string requestId,
-            decimal amount,
-            string currency,
-            bool useThreeDsChallengeIndicator,
-            string description,
-            string verificationUrlSuccess,
-            string verificationUrlFailure,
-            string verificationUrlCancel,
-            string verificationUrlInProcess,
-            string verificationUrlReturn,
-            DateTime time,
-            PaymentRequestCustomer customer,
-            CancellationToken cancellationToken = default)
-        {
-            var request = new PaymentRequest
-            {
-                Request = new Request
-                {
-                    Id = requestId,
-                    Time = time
-                },
-                MerchantOrder = new PaymentRequestMerchantOrder
-                {
-                    Description = description,
-                    Id = merchantOrderId,
-                },
-                PaymentData = new PaymentRequestPaymentData
-                {
-                    Amount = amount.ToString(CultureInfo.InvariantCulture),
-                    Currency = currency,
-                    Note = description,
-                    ThreeDsChallengeIndicator = useThreeDsChallengeIndicator == false ? "01" : "04"
-                },
-                PaymentMethod = paymentMethod,
-                ReturnUrls = new ReturnUrls()
-                {
-                    SuccessUrl = verificationUrlSuccess,
-                    DeclineUrl = verificationUrlFailure,
-                    CancelUrl = verificationUrlCancel,
-                    InprocessUrl = verificationUrlInProcess,
-                    ReturnUrl = verificationUrlReturn
-                },
-                Customer = customer
-            };
-            return request;
+            return method;
         }
     }
+
     #endregion
 }
