@@ -1,8 +1,13 @@
+using System.Collections.Generic;
+using System.Runtime.Serialization;
+using MyJetWallet.Unlimint.Base;
+using Newtonsoft.Json;
+
 namespace MyJetWallet.Unlimint.Models.Payments;
 
 public enum AcctTypeEnum
 {
-    _01,
-    _02,
-    _03
-}
+    NotApplicable,
+    Credit,
+    Debit
+};

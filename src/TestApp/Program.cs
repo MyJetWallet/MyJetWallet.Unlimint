@@ -19,22 +19,32 @@ namespace TestApp
 
         static async Task Main(string[] args)
         {
-            await TestAlternativeMethodInBpl("es", "BRL");
-            await TestAlternativeMethodInBpl("it", "BRL");
-            await TestAlternativeMethodInBpl("ru", "BRL");
-
-            await TestAlternativeMethodInBpl("es", "MXN");
-            await TestAlternativeMethodInBpl("it", "MXN");
-            await TestAlternativeMethodInBpl("ru", "MXN");
-
-            await TestAlternativeMethodInBpl("es", "COP");
-            await TestAlternativeMethodInBpl("it", "COP");
-            await TestAlternativeMethodInBpl("ru", "COP");
+            
+            await TestGatewayMethod("es", "EUR");
+            await TestGatewayMethod("es", "EUR");
+            await TestGatewayMethod("es", "EUR");
+            await TestGatewayMethod("es", "EUR");
+            
+            // await TestAlternativeMethod("es", "USD");
+            // await TestAlternativeMethod("it", "USD");
+            // await TestAlternativeMethod("ru", "USD");
+            
+            // await TestAlternativeMethod("es", "BRL");
+            // await TestAlternativeMethod("it", "BRL");
+            // await TestAlternativeMethod("ru", "BRL");
+            //
+            // await TestAlternativeMethod("es", "MXN");
+            // await TestAlternativeMethod("it", "MXN");
+            // await TestAlternativeMethod("ru", "MXN");
+            //
+            // await TestAlternativeMethod("es", "COP");
+            // await TestAlternativeMethod("it", "COP");
+            // await TestAlternativeMethod("ru", "COP");
             
             
             //TODO: Remove credentials
-            var terminalcCode = Environment.GetEnvironmentVariable("UNLIMINT_TERMINAL_CODE");
-            var password = Environment.GetEnvironmentVariable("UNLIMINT_PASSWORD");
+            var terminalcCode = Environment.GetEnvironmentVariable("UNLIMINT_TERMINAL_CODE_USD");
+            var password = Environment.GetEnvironmentVariable("UNLIMINT_PASSWORD_USD");
 
             _authClient = new UnlimintAuthClient(terminalcCode, password, UnlimintNetwork.Test);
             _client = new UnlimintClient(null, UnlimintNetwork.Test);
@@ -46,6 +56,7 @@ namespace TestApp
 
             _client.SetAccessToken(token?.Data?.AccessToken);
 
+            var paymentInf0 = await _client.GetPaymentByIdAsync("13502609");
 
             var paymentInf1 = await _client.GetPaymentByIdAsync("13391885");
             var paymentInf2 = await _client.GetPaymentByIdAsync("13391861");
@@ -140,7 +151,7 @@ namespace TestApp
         }
         
         
-        private static async Task TestAlternativeMethodInBpl(string locale, string currency)
+        private static async Task TestAlternativeMethod(string locale, string currency)
         {
             var terminalcCode = Environment.GetEnvironmentVariable("UNLIMINT_TERMINAL_CODE_" + currency);
             var password = Environment.GetEnvironmentVariable("UNLIMINT_PASSWORD_" + currency);
@@ -208,6 +219,106 @@ namespace TestApp
             var paymentAlternativeInfo = await client.GetPaymentByMerchantOrderIdAsync(
                 merchantOrderId, requestId);
         }
-        
+
+
+        private static async Task TestGatewayMethod(string locale, string currency)
+        {
+            var terminalcCode = Environment.GetEnvironmentVariable("UNLIMINT_TERMINAL_CODE_GW_" + currency);
+            var password = Environment.GetEnvironmentVariable("UNLIMINT_PASSWORD_GW_" + currency);
+
+            var authClient = new UnlimintAuthClient(terminalcCode, password, UnlimintNetwork.Test);
+            var client = new UnlimintClient(null, UnlimintNetwork.Test);
+
+            var token = await authClient.GetAuthorizationTokenAsync();
+            if (!token.Success || string.IsNullOrEmpty(token.Data?.AccessToken))
+            {
+                Console.WriteLine(token.Message);
+            }
+
+            client.SetAccessToken(token?.Data?.AccessToken);
+
+            var requestId = Guid.NewGuid().ToString();
+            var merchantOrderId = Guid.NewGuid().ToString();
+
+            var paymentResponse = await client
+                .CreateGatewayBankCardPaymentAsync(
+                    merchantOrderId,
+                    requestId,
+                    10m,
+                    currency,
+                    true,
+                    true,
+                    "Simple.app order description",
+                    "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?success=true", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?success=true", 
+                    "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?failure=true", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?failure=true",
+                    "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?cancel=true",
+                    "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?inproccess=true",
+                    "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?return=true",
+                    DateTime.UtcNow,
+                    new PaymentRequestCustomer
+                    {
+                        BirthDate = DateTime.UtcNow.AddYears(-33).ToString("yyyy-MM-dd"),
+                        DocumentType = null,
+                        Email = "yuriy.test.2022.07.15.001@mailinator.com",
+                        FirstName = "Yuriy",
+                        FullName = "Yuriy Test",
+                        //HomePhone = null,
+                        Id = "5e1c37e3230144a48ccb13b9662fc491",
+                        Identity = "Test",
+                        LastName = "Test",
+                        LivingAddress = new PaymentRequestLivingAddress()
+                        {
+                            Address = "Rua Visconde de Porto Seguro 1238",
+                            City = "Sao Paulo",
+                            Country = "Brazil",
+                            State = "SP",
+                            Zip = "04642-000"
+                        },
+                        Locale = locale,
+                        Phone = "+359885989618",
+                        //WorkPhone = null,
+                        Ip = "123.123.123.123"
+                    },
+                    new PaymentRequestCardAccount
+                    {
+                        BillingAddress = new BillingAddress
+                        {
+                            AddrLine1 = "Rua Visconde de Porto Seguro 1238",
+                            City = "Varna",
+                            Country = "BGR",
+                            State = "SP",
+                            Zip = "9000",
+                        },
+                        Card = new PaymentRequestCard
+                        {
+                            AcctType = AcctTypeEnum.NotApplicable,
+                            Expiration = "02/2023",
+                            Holder = "TEST",
+                            Pan = "4000000000000002",
+                            //PinCode = null,
+                            SecurityCode = "123"
+                        },
+                        //EncryptedCardData = null,
+                        //Token = null
+                    }
+                    //,cancellationToken
+                );
+
+
+            if (!paymentResponse.Success)
+            {
+                Console.WriteLine(paymentResponse.Message);
+            }
+            else
+            {
+                var paymentResponseUrl = paymentResponse.Data.RedirectUrl;
+
+                var paymentInfo = await client.GetPaymentByIdAsync(
+                    paymentResponse.Data.PaymentData.Id);
+
+                var paymentAlternativeInfo = await client.GetPaymentByMerchantOrderIdAsync(
+                    merchantOrderId, requestId);
+            }
+        }
     }
 }

@@ -5,6 +5,7 @@ namespace MyJetWallet.Unlimint.Models.Payments;
 public class PaymentRequestCard
 {
     [JsonProperty("acct_type", NullValueHandling = NullValueHandling.Ignore)] 
+    [JsonConverter(typeof(Converters.AcctTypeEnumConverter))]
     public AcctTypeEnum AcctType { get; set; }
     
     [JsonProperty("expiration", NullValueHandling = NullValueHandling.Ignore)] 

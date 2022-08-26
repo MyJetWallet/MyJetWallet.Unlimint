@@ -16,9 +16,9 @@ namespace MyJetWallet.Unlimint.Converters
 
         protected override List<KeyValuePair<AcctTypeEnum, string>> Mapping => new()
         {
-            new KeyValuePair<AcctTypeEnum, string>(AcctTypeEnum._01, "01"),
-            new KeyValuePair<AcctTypeEnum, string>(AcctTypeEnum._02, "02"),
-            new KeyValuePair<AcctTypeEnum, string>(AcctTypeEnum._03, "03"),
+            new KeyValuePair<AcctTypeEnum, string>(AcctTypeEnum.NotApplicable, "01"),
+            new KeyValuePair<AcctTypeEnum, string>(AcctTypeEnum.Credit, "02"),
+            new KeyValuePair<AcctTypeEnum, string>(AcctTypeEnum.Debit, "03"),
         };
     }
     
