@@ -20,14 +20,14 @@ namespace TestApp
         static async Task Main(string[] args)
         {
             
-            await TestGatewayMethod("es", "EUR");
-            await TestGatewayMethod("es", "EUR");
-            await TestGatewayMethod("es", "EUR");
-            await TestGatewayMethod("es", "EUR");
-            
-            // await TestAlternativeMethod("es", "USD");
+            //await TestGatewayMethod("es", "EUR");
+            // await TestGatewayMethod("es", "EUR");
+            // await TestGatewayMethod("es", "EUR");
+            // await TestGatewayMethod("es", "EUR");
+            //
+            //await TestAlternativeMethod("es", "USD");
             // await TestAlternativeMethod("it", "USD");
-            // await TestAlternativeMethod("ru", "USD");
+            await TestAlternativeMethod("ru", "USD");
             
             // await TestAlternativeMethod("es", "BRL");
             // await TestAlternativeMethod("it", "BRL");
@@ -41,8 +41,6 @@ namespace TestApp
             // await TestAlternativeMethod("it", "COP");
             // await TestAlternativeMethod("ru", "COP");
             
-            
-            //TODO: Remove credentials
             var terminalcCode = Environment.GetEnvironmentVariable("UNLIMINT_TERMINAL_CODE_USD");
             var password = Environment.GetEnvironmentVariable("UNLIMINT_PASSWORD_USD");
 
@@ -170,7 +168,8 @@ namespace TestApp
             var merchantOrderId = Guid.NewGuid().ToString();
             
             var paymentAlternativeResponse = await client.CreateAlternativePaymentAsync(
-                new List<string>(){"DAVIVIENDA", "BALOTO", "BOLETO","WALMART", "COMERCIALMEXICANA"},
+                //new List<string>(){"DAVIVIENDA", "BALOTO", "BOLETO","WALMART", "COMERCIALMEXICANA"},
+                new List<string>(),
                 merchantOrderId, 
                 requestId, 
                 10m, 
@@ -244,7 +243,7 @@ namespace TestApp
                 .CreateGatewayBankCardPaymentAsync(
                     merchantOrderId,
                     requestId,
-                    10m,
+                    10.12m,
                     currency,
                     true,
                     true,
@@ -269,10 +268,10 @@ namespace TestApp
                         LivingAddress = new PaymentRequestLivingAddress()
                         {
                             Address = "Rua Visconde de Porto Seguro 1238",
-                            City = "Sao Paulo",
-                            Country = "Brazil",
-                            State = "SP",
-                            Zip = "04642-000"
+                            // City = "Sao Paulo",
+                            // Country = "Brazil",
+                            // State = "SP",
+                            // Zip = "04642-000"
                         },
                         Locale = locale,
                         Phone = "+359885989618",
@@ -285,9 +284,9 @@ namespace TestApp
                         {
                             AddrLine1 = "Rua Visconde de Porto Seguro 1238",
                             City = "Varna",
-                            Country = "BGR",
-                            State = "SP",
-                            Zip = "9000",
+                             Country = "BGR",
+                             //State = "SP",
+                             Zip = "9000",
                         },
                         Card = new PaymentRequestCard
                         {

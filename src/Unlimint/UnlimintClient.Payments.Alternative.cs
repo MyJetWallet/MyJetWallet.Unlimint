@@ -251,6 +251,47 @@ namespace MyJetWallet.Unlimint
 
             return method;
         }
+                public const string PaymentAlternativeTypeBoleto = "BOLETO";
+        public const string PaymentAlternativeTypeBaloto = "BALOTO";
+        public const string PaymentAlternativeTypeDavivienda = "DAVIVIENDA";
+        public const string PaymentAlternativeTypeLoterica = "LOTERICA";
+        public const string PaymentAlternativeTypeSpei = "SPEI";
+        public const string PaymentAlternativeTypeOxxo = "OXXO";
+        public const string PaymentAlternativeTypeEfecty = "EFECTY";
+        public const string PaymentAlternativeTypeDepositExpressBrasil = "DEPOSITEXPRESSBRL";
+        public const string PaymentAlternativeTypePagoEfectivo = "PAGOEFECTIVO";
+        public const string PaymentAlternativeTypePix = "PIX";
+        public const string PaymentAlternativeTypeQqCodePicPay = "PICPAY";
+        public const string PaymentAlternativeTypeCodi = "CODI";
+        public const string PaymentAlternativeTypePse = "PSE";
+        public const string PaymentAlternativeTypeSoriana = "SORIANA";
+        public const string PaymentAlternativeTypeComercialMexicana = "COMERCIALMEXICANA";
+        public const string PaymentAlternativeTypeBancomer = "BANCOMER";
+        public const string PaymentAlternativeTypeWalmart = "WALMART";
+        public const string PaymentAlternativeTypeBodegaAurrera = "BODEGA";
+        public const string PaymentAlternativeTypeSamsClub = "SAMSCLUB";
+        public const string PaymentAlternativeTypeSuperama = "SUPERAMA";
+        public const string PaymentAlternativeTypeCalimax = "CALIMAX";
+        public const string PaymentAlternativeTypeTiendasExtra = "EXTRA";
+        public const string PaymentAlternativeTypeCirculoK = "CIRCULOK";
+        public const string PaymentAlternativeTypeSevenEleven = "7ELEVEN";
+        public const string PaymentAlternativeTypeTelecomm = "TELECOMM";
+        public const string PaymentAlternativeTypeBanorte = "BANORTE";
+        public const string PaymentAlternativeTypeFarmaciasBenavides = "BENAVIDES";
+        public const string PaymentAlternativeTypeFarmaciasdelAhorro = "DELAHORRO";
+        public const string PaymentAlternativeTypeElAsturiano = "ELASTURIANO";
+        public const string PaymentAlternativeTypeWaldos = "WALDOS";
+        public const string PaymentAlternativeTypeAlsuper = "ALSUPER";
+        public const string PaymentAlternativeTypeKiosko = "KIOSKO";
+        public const string PaymentAlternativeTypeFarmaciasSantaMaria = "STAMARIA";
+        public const string PaymentAlternativeTypeFarmaciasLaMasBarata = "LAMASBARATA";
+        public const string PaymentAlternativeTypeFarmaciasRoma = "FARMROMA";
+        public const string PaymentAlternativeTypeFarmacias911 = "FARM911";
+        public const string PaymentAlternativeTypeFarmaciasEconomicas = "FARMECONOMICAS";
+        public const string PaymentAlternativeTypeFarmaciasMedicity = "FARMMEDICITY";
+        public const string PaymentAlternativeTypeRianxeira = "RIANXEIRA";
+        public const string PaymentAlternativeTypeWesternUnion = "WESTERNUNION";
+        public const string PaymentAlternativeTypeZonaPago = "ZONAPAGO";
     }
 
     #endregion
