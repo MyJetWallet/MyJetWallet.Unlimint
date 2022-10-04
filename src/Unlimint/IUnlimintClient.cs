@@ -171,6 +171,7 @@ namespace MyJetWallet.Unlimint
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         WebCallResult<PaymentGatewayCreationResponse> CreateAlternativePayment(
+            string mainPaymentMethod,
             List<string> alternativeMethods,
             string merchantOrderId,
             string requestId,
@@ -188,6 +189,7 @@ namespace MyJetWallet.Unlimint
             CancellationToken cancellationToken = default);
         
         Task<WebCallResult<PaymentGatewayCreationResponse>> CreateAlternativePaymentAsync(
+            string mainPaymentMethod,
             List<string> alternativeMethods,
             string merchantOrderId,
             string requestId,

@@ -17,19 +17,20 @@ namespace MyJetWallet.Unlimint
         #region PaymentsAlternative
 
         public WebCallResult<PaymentGatewayCreationResponse> CreateAlternativePayment(
-            List<string> paymentAlternativeMethods, string merchantOrderId,
+            string mainPaymentMethod, List<string> paymentAlternativeMethods, string merchantOrderId,
             string requestId, decimal amount,
             string currency, bool useThreeDsChallengeIndicator, string description,
             string verificationUrlSuccess, string verificationUrlFailure, string verificationUrlCancel,
             string verificationUrlInProcess, string verificationUrlReturn, DateTime time,
             PaymentRequestCustomer customer, CancellationToken cancellationToken = default) =>
-            CreateAlternativePaymentAsync(paymentAlternativeMethods, merchantOrderId, requestId, amount,
+            CreateAlternativePaymentAsync(mainPaymentMethod, paymentAlternativeMethods, merchantOrderId, requestId, amount,
                 currency, useThreeDsChallengeIndicator,
                 description, verificationUrlSuccess, verificationUrlFailure, verificationUrlCancel,
                 verificationUrlInProcess, verificationUrlReturn, time, customer, cancellationToken = default).Result;
 
         public async Task<WebCallResult<PaymentGatewayCreationResponse>> CreateAlternativePaymentAsync(
-            List<string> methods,
+            string mainMethod,
+            List<string> extentionMethods,
             string merchantOrderId,
             string requestId,
             decimal amount,
@@ -46,7 +47,8 @@ namespace MyJetWallet.Unlimint
             CancellationToken cancellationToken = default)
         {
             var request = CreateAlternativePaymentRequest(
-                methods,
+                mainMethod,
+                extentionMethods,
                 merchantOrderId,
                 requestId,
                 amount,
@@ -66,6 +68,7 @@ namespace MyJetWallet.Unlimint
         }
 
         private PaymentRequest CreateAlternativePaymentRequest(
+            string mainMethod,
             List<string> paymentMethods,
             string merchantOrderId,
             string requestId,
@@ -101,7 +104,7 @@ namespace MyJetWallet.Unlimint
                     Note = description,
                     ThreeDsChallengeIndicator = useThreeDsChallengeIndicator == false ? "01" : "04"
                 },
-                PaymentMethod = null,
+                PaymentMethod = mainMethod,
                 PaymentMethods = paymentMethods,
                 ReturnUrls = new ReturnUrls()
                 {
@@ -251,7 +254,8 @@ namespace MyJetWallet.Unlimint
 
             return method;
         }
-                public const string PaymentAlternativeTypeBoleto = "BOLETO";
+        
+        public const string PaymentAlternativeTypeBoleto = "BOLETO";
         public const string PaymentAlternativeTypeBaloto = "BALOTO";
         public const string PaymentAlternativeTypeDavivienda = "DAVIVIENDA";
         public const string PaymentAlternativeTypeLoterica = "LOTERICA";

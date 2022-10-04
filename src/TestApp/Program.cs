@@ -27,14 +27,14 @@ namespace TestApp
             //
             //await TestAlternativeMethod("es", "USD");
             // await TestAlternativeMethod("it", "USD");
-            await TestAlternativeMethod("ru", "USD");
+            //await TestAlternativeMethod("ru", "USD");
             
             // await TestAlternativeMethod("es", "BRL");
             // await TestAlternativeMethod("it", "BRL");
             // await TestAlternativeMethod("ru", "BRL");
             //
-            // await TestAlternativeMethod("es", "MXN");
-            // await TestAlternativeMethod("it", "MXN");
+            //await TestAlternativeMethod("es", "MXN");
+            //await TestAlternativeMethod("it", "MXN");
             // await TestAlternativeMethod("ru", "MXN");
             //
             // await TestAlternativeMethod("es", "COP");
@@ -153,7 +153,7 @@ namespace TestApp
         {
             var terminalcCode = Environment.GetEnvironmentVariable("UNLIMINT_TERMINAL_CODE_" + currency);
             var password = Environment.GetEnvironmentVariable("UNLIMINT_PASSWORD_" + currency);
-            
+
             var authClient = new UnlimintAuthClient(terminalcCode, password, UnlimintNetwork.Test);
             var client = new UnlimintClient(null, UnlimintNetwork.Test);
             
@@ -168,7 +168,7 @@ namespace TestApp
             var merchantOrderId = Guid.NewGuid().ToString();
             
             var paymentAlternativeResponse = await client.CreateAlternativePaymentAsync(
-                //new List<string>(){"DAVIVIENDA", "BALOTO", "BOLETO","WALMART", "COMERCIALMEXICANA"},
+                string.Empty, 
                 new List<string>(),
                 merchantOrderId, 
                 requestId, 
