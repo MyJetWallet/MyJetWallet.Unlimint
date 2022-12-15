@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace MyJetWallet.Unlimint.Models.Payments;
 
-[DataContract]
+[DataContract] 
 public class PaymentResponse
 {
     [JsonProperty("customer"), DataMember(Order = 1)]

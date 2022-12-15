@@ -30,7 +30,7 @@ namespace MyJetWallet.Unlimint.Converters
             new KeyValuePair<PaymentErrorCode, string>(PaymentErrorCode.InsufficientFunds, "13"),
             new KeyValuePair<PaymentErrorCode, string>(PaymentErrorCode.CardLimitReached, "14"),
             new KeyValuePair<PaymentErrorCode, string>(PaymentErrorCode.IncorrectCardData, "15"),
-            new KeyValuePair<PaymentErrorCode, string>(PaymentErrorCode.DeclinedByAntifraud, "16"),
+            new KeyValuePair<PaymentErrorCode, string>(PaymentErrorCode.DeclinedByBankAntifraud, "16"),
             new KeyValuePair<PaymentErrorCode, string>(PaymentErrorCode.BankMalfunction, "17"),
             new KeyValuePair<PaymentErrorCode, string>(PaymentErrorCode.ConnectionProblem, "18"),
             new KeyValuePair<PaymentErrorCode, string>(PaymentErrorCode.IncorrectPaymentData, "19"),
