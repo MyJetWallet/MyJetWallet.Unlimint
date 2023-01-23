@@ -18,7 +18,9 @@ namespace TestApp
 
         static async Task Main(string[] args)
         {
-            await TestProdBankMethod("DE", "EUR");
+            await TestGooglepayMethod("BG", "USD");
+
+            //await TestProdBankMethod("DE", "EUR");
 
             //await TestGatewayMethod("es", "EUR");
             // await TestGatewayMethod("es", "EUR");
@@ -382,6 +384,84 @@ namespace TestApp
 
             var paymentFirstInfo = await client.GetPaymentByMerchantOrderIdAsync(
                 merchantOrderId, requestId);
+        }
+        
+        
+        private static async Task TestGooglepayMethod(string locale, string currency)
+        {
+            var terminalcCode = Environment.GetEnvironmentVariable("MyJetWallet-UnlimintSigner-Googlepay-" + currency +"-WalletId");
+            var password = Environment.GetEnvironmentVariable("MyJetWallet-UnlimintSigner-Googlepay-" + currency + "-Password");
+
+            var authClient = new UnlimintAuthClient(terminalcCode, password, UnlimintNetwork.Test);
+            var client = new UnlimintClient(null, UnlimintNetwork.Test);
+
+            var token = await authClient.GetAuthorizationTokenAsync();
+            if (!token.Success || string.IsNullOrEmpty(token.Data?.AccessToken))
+            {
+                Console.WriteLine(token.Message);
+            }
+
+            client.SetAccessToken(token?.Data?.AccessToken);
+
+            var requestId = Guid.NewGuid().ToString();
+            var merchantOrderId = Guid.NewGuid().ToString();
+            var encrytedData = "{\"signature\":\"MEUCIGE2lqzSMTFjCjNK8xkmOV2wTHRobEJouD9bKX/mOU05AiEA6fL3Cl+e6LCrtcxa3FqtFV1qdkebwh0TGoxn9SRCmr0\\u003d\",\"intermediateSigningKey\":{\"signedKey\":\"{\\\"keyValue\\\":\\\"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEoo1+38SkcLa8iEpL68zMw1qdhF/qUyJVuQXETO34XVh+/2vQv3g6c7C2oTzxXBCwA7vCiBMowaU8hzfnaRO6aQ\\\\u003d\\\\u003d\\\",\\\"keyExpiration\\\":\\\"1666849559604\\\"}\",\"signatures\":[\"MEUCIDaYfD+XhPw0sihdOuZWKy90hCpYlXTZGw57h9IuKYzXAiEA++N/pwD4KgaG+nvRSk/RWqWBTVok0DwbcfCKtJcd8O0\\u003d\"]},\"protocolVersion\":\"ECv2\",\"signedMessage\":\"{\\\"encryptedMessage\\\":\\\"k78lqEB7rhMCa6OSvDKanRVL97GLsBRDmayt0P7lcDJ9yc+tW5h55PQidM+T50Mox8fIZF6uf4sBcak3faSEtH0JrYOrjiqo+/aqR2oDy5OIHeF4S4tOXjYcz5cAXWBp9kQe4zpnQ0Oz2Pv8zcw40l3hnHehAC4iTFAIABuFYiJJshZfnQkHt0JZHBxvBmj75/dOassRem0VJjvxXz/RFgtLZLPm3A6yw0chDvN+YcbsgBVrJAnfrAox5u2IQfO0MC8pSfRhnKW4ZvasZb29LJAofNOEOXH929AA65WQ/OiS+f4Fofng/qnvFZBxswjC2Q8uIAnZhsDveBJdnb9Dl5sF6Ui/6UxOGENh2Co3o0l/odFaG4Sw+paU4XQeLS4z8QEO7+nEmTPyHAz4U3bMqtDAdP4GWovNG2r/ABR+bcEDUhloRQeOFQqHPW7uofTD/spketegSQW66UJWcnoLsuGFgh4nK8zBifRrePnu0hAr9qYZCgbdkHjw/JNdSO749hD3Bb0LO2Ine2ZQ8sMNsh8F1xakn4cgVTsVjOiQ0nQmmdzVdOM4pOYuMj7O8dYkZ0usRg0fD1wV\\\",\\\"ephemeralPublicKey\\\":\\\"BF4WwdJDM05iwqB5IeFM6ChPsM2M31zwVxPY5cgaMTJKi/l0qDvreWqps/7WqnTqABHKLwq08Hcz90nU+Y2Z7fI\\\\u003d\\\",\\\"tag\\\":\\\"/1bc8yjdhQV9RKMYM+2oG3QUecl469N4hZ0sNVvC/nI\\\\u003d\\\"}\"}\n";
+
+            var paymentResponse = 
+                await client.CreateGatewayGooglepayPaymentAsync(
+                    merchantOrderId,
+                requestId,
+                10m,
+                currency,
+                "BUY 0.00001 BTC FOR 10 USD",
+                    Base64Encode(encrytedData),
+                "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?success=true", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?success=true", 
+                "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?failure=true", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?failure=true",
+                "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?cancel=true",
+                "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?inproccess=true",
+                "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?return=true",
+                DateTime.UtcNow,
+                new PaymentRequestCustomer
+                {
+                    BirthDate = DateTime.UtcNow.AddYears(-33).ToString("yyyy-MM-dd"),
+                    DocumentType = null,
+                    Email = "yuriy.test.2022.07.15.001@mailinator.com",
+                    FirstName = "Yuriy",
+                    FullName = "Yuriy Test",
+                    //HomePhone = null,
+                    Id = "5e1c37e3230144a48ccb13b9662fc491",
+                    Identity = "Test",
+                    LastName = "Test",
+                    LivingAddress = new PaymentRequestLivingAddress()
+                    {
+                        Address = "Rua Visconde de Porto Seguro 1238",
+                        City = "Sao Paulo",
+                        Country = "Brazil",
+                        State = "SP",
+                        Zip = "04642-000"
+                    },
+                    Locale = locale,
+                    Phone = "+359885989618",
+                    //WorkPhone = null,
+                    Ip = "123.123.123.123"
+                } //,cancellationToken
+            );
+
+
+            if (!paymentResponse.Success)
+            {
+                Console.WriteLine(paymentResponse.Message);
+            }
+
+            var paymentResponseUrl = paymentResponse.Data.RedirectUrl;
+
+            var paymentInfo = await client.GetPaymentByMerchantOrderIdAsync(
+                merchantOrderId, requestId);
+        }
+        
+        public static string Base64Encode(string plainText) {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return System.Convert.ToBase64String(plainTextBytes);
         }
     }
 }

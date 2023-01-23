@@ -19,12 +19,12 @@ namespace MyJetWallet.Unlimint
         public WebCallResult<PaymentGatewayCreationResponse> CreateGatewayGooglepayPayment(
             string merchantOrderId,
             string requestId, decimal amount, string currency, string description, 
-            string appleEncryptedData, string verificationUrlSuccess,
+            string googleEncryptedData, string verificationUrlSuccess,
             string verificationUrlFailure, string verificationUrlCancel, string verificationUrlInProcess,
             string verificationUrlReturn, DateTime time, PaymentRequestCustomer customer,
             CancellationToken cancellationToken = default) =>
             CreateGatewayGooglepayPaymentAsync(
-                    merchantOrderId, requestId, amount, currency, description, appleEncryptedData,
+                    merchantOrderId, requestId, amount, currency, description, googleEncryptedData,
                     verificationUrlSuccess, verificationUrlFailure, verificationUrlCancel, verificationUrlInProcess,
                     verificationUrlReturn, time, customer, cancellationToken = default)
                 .Result;
@@ -36,7 +36,7 @@ namespace MyJetWallet.Unlimint
             decimal amount,
             string currency,
             string description,
-            string appleEncryptedData,
+            string googleEncryptedData,
             string verificationUrlSuccess,
             string verificationUrlFailure,
             string verificationUrlCancel,
@@ -64,7 +64,7 @@ namespace MyJetWallet.Unlimint
                     Amount = amount.ToString(CultureInfo.InvariantCulture),
                     Currency = currency,
                     Note = description,
-                    EncryptedData = appleEncryptedData
+                    EncryptedData = googleEncryptedData
                 },
                 PaymentMethod = "GOOGLEPAY",
                 ReturnUrls = new ReturnUrls()

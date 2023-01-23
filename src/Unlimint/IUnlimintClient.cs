@@ -302,7 +302,7 @@ namespace MyJetWallet.Unlimint
         /// <param name="amount">Magnitude of the amount, in units of the currency, with a ..</param>
         /// <param name="currency">Currency code.</param>
         /// <param name="description">Description of the payment with length restriction of 240 characters.</param>
-        /// <param name="appleEncryptedData"></param>
+        /// <param name="googleEncryptedData"></param>
         /// <param name="verificationUrlSuccess"></param>
         /// <param name="verificationUrlFailure"></param>
         /// <param name="verificationUrlCancel"></param>
@@ -315,7 +315,7 @@ namespace MyJetWallet.Unlimint
         WebCallResult<PaymentGatewayCreationResponse> CreateGatewayGooglepayPayment(
              string merchantOrderId,
              string requestId, decimal amount, string currency, string description, 
-             string appleEncryptedData, string verificationUrlSuccess,
+             string googleEncryptedData, string verificationUrlSuccess,
              string verificationUrlFailure, string verificationUrlCancel, string verificationUrlInProcess,
              string verificationUrlReturn, DateTime time, PaymentRequestCustomer customer,
              CancellationToken cancellationToken = default);
@@ -323,7 +323,7 @@ namespace MyJetWallet.Unlimint
         Task<WebCallResult<PaymentGatewayCreationResponse>> CreateGatewayGooglepayPaymentAsync(
             string merchantOrderId,
             string requestId, decimal amount, string currency, string description, 
-            string appleEncryptedData, string verificationUrlSuccess,
+            string googleEncryptedData, string verificationUrlSuccess,
             string verificationUrlFailure, string verificationUrlCancel, string verificationUrlInProcess,
             string verificationUrlReturn, DateTime time, PaymentRequestCustomer customer,
             CancellationToken cancellationToken = default);
