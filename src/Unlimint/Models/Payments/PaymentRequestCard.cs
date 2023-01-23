@@ -27,4 +27,18 @@ public class PaymentRequestCard
     [LogMasked(PreserveLength = true)]
     [JsonProperty("security_code", NullValueHandling = NullValueHandling.Ignore)] 
     public string SecurityCode { get; set; }
+
+    public PaymentRequestCard()
+    {
+    }
+
+    public PaymentRequestCard(PaymentRequestCard card)
+    {
+        AcctType = card.AcctType;
+        Expiration = card.Expiration;
+        Holder = card.Holder;
+        Pan = card.Pan;
+        PinCode = card.PinCode;
+        SecurityCode = card.SecurityCode;
+    }
 }

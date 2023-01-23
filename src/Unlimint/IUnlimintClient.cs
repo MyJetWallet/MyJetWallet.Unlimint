@@ -294,6 +294,41 @@ namespace MyJetWallet.Unlimint
             string verificationUrlReturn, DateTime time, PaymentRequestCustomer customer,
             CancellationToken cancellationToken = default);
         
+                /// <summary>
+        /// Create a payment.
+        /// </summary>
+        /// <param name="merchantOrderId">Unique idempotency key. This key is utilized to ensure exactly-once execution of mutating requests.</param>
+        /// <param name="requestId">Unique identifier of the public key used in encryption.</param>
+        /// <param name="amount">Magnitude of the amount, in units of the currency, with a ..</param>
+        /// <param name="currency">Currency code.</param>
+        /// <param name="description">Description of the payment with length restriction of 240 characters.</param>
+        /// <param name="appleEncryptedData"></param>
+        /// <param name="verificationUrlSuccess"></param>
+        /// <param name="verificationUrlFailure"></param>
+        /// <param name="verificationUrlCancel"></param>
+        /// <param name="verificationUrlInProcess"></param>
+        /// <param name="verificationUrlReturn"></param>
+        /// <param name="time"></param>
+        /// <param name="customer"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        WebCallResult<PaymentGatewayCreationResponse> CreateGatewayGooglepayPayment(
+             string merchantOrderId,
+             string requestId, decimal amount, string currency, string description, 
+             string appleEncryptedData, string verificationUrlSuccess,
+             string verificationUrlFailure, string verificationUrlCancel, string verificationUrlInProcess,
+             string verificationUrlReturn, DateTime time, PaymentRequestCustomer customer,
+             CancellationToken cancellationToken = default);
+
+        Task<WebCallResult<PaymentGatewayCreationResponse>> CreateGatewayGooglepayPaymentAsync(
+            string merchantOrderId,
+            string requestId, decimal amount, string currency, string description, 
+            string appleEncryptedData, string verificationUrlSuccess,
+            string verificationUrlFailure, string verificationUrlCancel, string verificationUrlInProcess,
+            string verificationUrlReturn, DateTime time, PaymentRequestCustomer customer,
+            CancellationToken cancellationToken = default);
+        
+        
         /// <summary>
         /// Get a payment.
         /// </summary>

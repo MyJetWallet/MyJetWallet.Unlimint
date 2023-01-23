@@ -13,13 +13,13 @@ namespace TestApp
 {
     static class Program
     {
-
         private static UnlimintAuthClient _authClient;
         private static UnlimintClient _client;
 
         static async Task Main(string[] args)
         {
-            
+            await TestProdBankMethod("DE", "EUR");
+
             //await TestGatewayMethod("es", "EUR");
             // await TestGatewayMethod("es", "EUR");
             // await TestGatewayMethod("es", "EUR");
@@ -28,7 +28,7 @@ namespace TestApp
             //await TestAlternativeMethod("es", "USD");
             // await TestAlternativeMethod("it", "USD");
             //await TestAlternativeMethod("ru", "USD");
-            
+
             // await TestAlternativeMethod("es", "BRL");
             // await TestAlternativeMethod("it", "BRL");
             // await TestAlternativeMethod("ru", "BRL");
@@ -40,29 +40,29 @@ namespace TestApp
             // await TestAlternativeMethod("es", "COP");
             // await TestAlternativeMethod("it", "COP");
             // await TestAlternativeMethod("ru", "COP");
-            
-            var terminalcCode = Environment.GetEnvironmentVariable("UNLIMINT_TERMINAL_CODE_USD");
-            var password = Environment.GetEnvironmentVariable("UNLIMINT_PASSWORD_USD");
 
-            _authClient = new UnlimintAuthClient(terminalcCode, password, UnlimintNetwork.Test);
-            _client = new UnlimintClient(null, UnlimintNetwork.Test);
-            var token = await _authClient.GetAuthorizationTokenAsync();
-            if (!token.Success || string.IsNullOrEmpty(token.Data?.AccessToken))
-            {
-                Console.WriteLine(token.Message);
-            }
+            // var terminalcCode = Environment.GetEnvironmentVariable("MyJetWallet-UnlimintSigner-DirectBankingEu-EUR-WalletId");
+            // var password = Environment.GetEnvironmentVariable("MyJetWallet-UnlimintSigner-DirectBankingEu-EUR-Password");
 
-            _client.SetAccessToken(token?.Data?.AccessToken);
+            // _authClient = new UnlimintAuthClient(terminalcCode, password, UnlimintNetwork.Main);
+            // _client = new UnlimintClient(null, UnlimintNetwork.Main);
+            // var token = await _authClient.GetAuthorizationTokenAsync();
+            // if (!token.Success || string.IsNullOrEmpty(token.Data?.AccessToken))
+            // {
+            //     Console.WriteLine(token.Message);
+            // }
+            //
+            // _client.SetAccessToken(token?.Data?.AccessToken);
 
-            var paymentInf0 = await _client.GetPaymentByIdAsync("13502609");
-
-            var paymentInf1 = await _client.GetPaymentByIdAsync("13391885");
-            var paymentInf2 = await _client.GetPaymentByIdAsync("13391861");
-            var paymentInf3 = await _client.GetPaymentByIdAsync("13391879");
-            var paymentInf4 = await _client.GetPaymentByIdAsync("13391877");
-            var paymentInf5 = await _client.GetPaymentByIdAsync("13427293");
-            var paymentInf6 = await _client.GetPaymentByIdAsync("13455113");
-
+            // var paymentInf0 = await _client.GetPaymentByIdAsync("13502609");
+            //
+            // var paymentInf1 = await _client.GetPaymentByIdAsync("13391885");
+            // var paymentInf2 = await _client.GetPaymentByIdAsync("13391861");
+            // var paymentInf3 = await _client.GetPaymentByIdAsync("13391879");
+            // var paymentInf4 = await _client.GetPaymentByIdAsync("13391877");
+            // var paymentInf5 = await _client.GetPaymentByIdAsync("13427293");
+            // var paymentInf6 = await _client.GetPaymentByIdAsync("13455113");
+            //
 
             //
             // var paymentDataInfo2 = await _client.GetPaymentByMerchantOrderIdAsync(
@@ -142,13 +142,13 @@ namespace TestApp
         private static async Task TestPublicKey()
         {
             var key = await _authClient.GetAuthorizationTokenAsync();
-             Console.WriteLine(JsonSerializer.Serialize(key, new JsonSerializerOptions()
-             {
-                 WriteIndented = true
-             }));
+            Console.WriteLine(JsonSerializer.Serialize(key, new JsonSerializerOptions()
+            {
+                WriteIndented = true
+            }));
         }
-        
-        
+
+
         private static async Task TestAlternativeMethod(string locale, string currency)
         {
             var terminalcCode = Environment.GetEnvironmentVariable("UNLIMINT_TERMINAL_CODE_" + currency);
@@ -156,32 +156,33 @@ namespace TestApp
 
             var authClient = new UnlimintAuthClient(terminalcCode, password, UnlimintNetwork.Test);
             var client = new UnlimintClient(null, UnlimintNetwork.Test);
-            
+
             var token = await authClient.GetAuthorizationTokenAsync();
             if (!token.Success || string.IsNullOrEmpty(token.Data?.AccessToken))
             {
                 Console.WriteLine(token.Message);
             }
+
             client.SetAccessToken(token?.Data?.AccessToken);
-            
+
             var requestId = Guid.NewGuid().ToString();
             var merchantOrderId = Guid.NewGuid().ToString();
-            
+
             var paymentAlternativeResponse = await client.CreateAlternativePaymentAsync(
-                string.Empty, 
+                string.Empty,
                 new List<string>(),
-                merchantOrderId, 
-                requestId, 
-                10m, 
-                currency, 
-                true, 
-                "Simple.app order description", 
+                merchantOrderId,
+                requestId,
+                10m,
+                currency,
+                true,
+                "Simple.app order description",
                 "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?success=true", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?success=true", 
                 "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?failure=true", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?failure=true",
                 "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?cancel=true",
                 "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?inproccess=true",
                 "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?return=true",
-                DateTime.UtcNow, 
+                DateTime.UtcNow,
                 new PaymentRequestCustomer
                 {
                     BirthDate = DateTime.UtcNow.AddYears(-33).ToString("yyyy-MM-dd"),
@@ -205,16 +206,17 @@ namespace TestApp
                     Phone = "+359885989618",
                     //WorkPhone = null,
                     Ip = "123.123.123.123"
-                }//,cancellationToken
-                );
-            
-            
+                } //,cancellationToken
+            );
+
+
             if (!paymentAlternativeResponse.Success)
             {
                 Console.WriteLine(paymentAlternativeResponse.Message);
             }
+
             var paymentAlternativeResponseUrl = paymentAlternativeResponse.Data.RedirectUrl;
-            
+
             var paymentAlternativeInfo = await client.GetPaymentByMerchantOrderIdAsync(
                 merchantOrderId, requestId);
         }
@@ -284,9 +286,9 @@ namespace TestApp
                         {
                             AddrLine1 = "Rua Visconde de Porto Seguro 1238",
                             City = "Varna",
-                             Country = "BGR",
-                             //State = "SP",
-                             Zip = "9000",
+                            Country = "BGR",
+                            //State = "SP",
+                            Zip = "9000",
                         },
                         Card = new PaymentRequestCard
                         {
@@ -318,6 +320,68 @@ namespace TestApp
                 var paymentAlternativeInfo = await client.GetPaymentByMerchantOrderIdAsync(
                     merchantOrderId, requestId);
             }
+        }
+
+        private static async Task TestProdBankMethod(string locale, string currency)
+        {
+            var terminalcCode =
+                Environment.GetEnvironmentVariable("MyJetWallet-UnlimintSigner-DirectBankingEu-EUR-WalletId");
+            var password =
+                Environment.GetEnvironmentVariable("MyJetWallet-UnlimintSigner-DirectBankingEu-EUR-Password");
+
+            var authClient = new UnlimintAuthClient(terminalcCode, password, UnlimintNetwork.Main);
+            var client = new UnlimintClient(null, UnlimintNetwork.Main);
+
+            var token = await authClient.GetAuthorizationTokenAsync();
+            if (!token.Success || string.IsNullOrEmpty(token.Data?.AccessToken))
+            {
+                Console.WriteLine(token.Message);
+            }
+
+            client.SetAccessToken(token?.Data?.AccessToken);
+
+            var requestId = Guid.NewGuid().ToString("N");
+            var merchantOrderId = Guid.NewGuid().ToString("N");
+            try
+            {
+                var paymentFirst = await client.CreatePaymentAsync(
+                    merchantOrderId,
+                    requestId,
+                    "yuriy.test.2022.07.15.001@mailinator.com",
+                    //"+359885989618", 
+                    null,
+                    "259f6226-4231-4936-8bf4-19f5cc900109",
+                    "234.22.12.01",
+                    100m,
+                    currency,
+                    "jetwallet|-|5e1c37e3230144a48ccb13b9662fc491|-|SP-5e1c37e3230144a48ccb13b9662fc491",
+                    true,
+                    true,
+                    "jetwallet|-|5e1c37e3230144a48ccb13b9662fc491|-|SP-5e1c37e3230144a48ccb13b9662fc491",
+                    "https://simple.app/circle/success", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?success=true", 
+                    "https://simple.app/circle/failure", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?failure=true",
+                    null,
+                    null,
+                    null,
+                    DateTime.UtcNow,
+                    "DIRECTBANKINGEU",
+                    "CLIENT-5e1c37e3230144a48ccb13b9662fc491");
+
+                if (!paymentFirst.Success)
+                {
+                    Console.WriteLine(paymentFirst.Message);
+                }
+
+                var paymentFirstResponseUrl = paymentFirst.Data.RedirectUrl;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            var paymentFirstInfo = await client.GetPaymentByMerchantOrderIdAsync(
+                merchantOrderId, requestId);
         }
     }
 }

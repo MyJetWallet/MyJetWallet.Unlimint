@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO.Compression;
 using System.Threading;
@@ -109,11 +110,13 @@ namespace MyJetWallet.Unlimint
                 {
                     Amount = amount.ToString(CultureInfo.InvariantCulture),
                     Currency = currency,
-                    GenerateToken = generateToken,
+                    //GenerateToken = generateToken,
                     Note = description,
-                    ThreeDsChallengeIndicator = useThreeDsChallengeIndicator == false ? "01" : "04"
+                    //ThreeDsChallengeIndicator = useThreeDsChallengeIndicator == false ? "01" : "04"
                 },
                 PaymentMethod = paymentMethod,
+                // PaymentMethods = new List<string>()
+                //     {paymentMethod},
                 ReturnUrls = new ReturnUrls()
                 {
                     SuccessUrl = verificationUrlSuccess,
@@ -122,7 +125,7 @@ namespace MyJetWallet.Unlimint
                     InprocessUrl = verificationUrlInProcess,
                     ReturnUrl = verificationUrlReturn
                 },
-                CardAccount = new PaymentRequestCardAccount()
+                //CardAccount = new PaymentRequestCardAccount()
             };
             return await PostAsync<PaymentGatewayCreationResponse>($"{EndpointUrl}/payments", data, cancellationToken);
         }
