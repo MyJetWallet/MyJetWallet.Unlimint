@@ -8,6 +8,8 @@ using Microsoft.VisualBasic;
 using MyJetWallet.Unlimint;
 using MyJetWallet.Unlimint.Models;
 using MyJetWallet.Unlimint.Models.Payments;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace TestApp
 {
@@ -18,7 +20,8 @@ namespace TestApp
 
         static async Task Main(string[] args)
         {
-            await TestGooglepayMethod("BG", "USD");
+            await TestCardBin("US", "USD");
+            await TestGooglepayMethod("US", "USD");
 
             //await TestProdBankMethod("DE", "EUR");
 
@@ -405,8 +408,11 @@ namespace TestApp
 
             var requestId = Guid.NewGuid().ToString();
             var merchantOrderId = Guid.NewGuid().ToString();
-            var encrytedData = "{\"signature\":\"MEUCIGE2lqzSMTFjCjNK8xkmOV2wTHRobEJouD9bKX/mOU05AiEA6fL3Cl+e6LCrtcxa3FqtFV1qdkebwh0TGoxn9SRCmr0\\u003d\",\"intermediateSigningKey\":{\"signedKey\":\"{\\\"keyValue\\\":\\\"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEoo1+38SkcLa8iEpL68zMw1qdhF/qUyJVuQXETO34XVh+/2vQv3g6c7C2oTzxXBCwA7vCiBMowaU8hzfnaRO6aQ\\\\u003d\\\\u003d\\\",\\\"keyExpiration\\\":\\\"1666849559604\\\"}\",\"signatures\":[\"MEUCIDaYfD+XhPw0sihdOuZWKy90hCpYlXTZGw57h9IuKYzXAiEA++N/pwD4KgaG+nvRSk/RWqWBTVok0DwbcfCKtJcd8O0\\u003d\"]},\"protocolVersion\":\"ECv2\",\"signedMessage\":\"{\\\"encryptedMessage\\\":\\\"k78lqEB7rhMCa6OSvDKanRVL97GLsBRDmayt0P7lcDJ9yc+tW5h55PQidM+T50Mox8fIZF6uf4sBcak3faSEtH0JrYOrjiqo+/aqR2oDy5OIHeF4S4tOXjYcz5cAXWBp9kQe4zpnQ0Oz2Pv8zcw40l3hnHehAC4iTFAIABuFYiJJshZfnQkHt0JZHBxvBmj75/dOassRem0VJjvxXz/RFgtLZLPm3A6yw0chDvN+YcbsgBVrJAnfrAox5u2IQfO0MC8pSfRhnKW4ZvasZb29LJAofNOEOXH929AA65WQ/OiS+f4Fofng/qnvFZBxswjC2Q8uIAnZhsDveBJdnb9Dl5sF6Ui/6UxOGENh2Co3o0l/odFaG4Sw+paU4XQeLS4z8QEO7+nEmTPyHAz4U3bMqtDAdP4GWovNG2r/ABR+bcEDUhloRQeOFQqHPW7uofTD/spketegSQW66UJWcnoLsuGFgh4nK8zBifRrePnu0hAr9qYZCgbdkHjw/JNdSO749hD3Bb0LO2Ine2ZQ8sMNsh8F1xakn4cgVTsVjOiQ0nQmmdzVdOM4pOYuMj7O8dYkZ0usRg0fD1wV\\\",\\\"ephemeralPublicKey\\\":\\\"BF4WwdJDM05iwqB5IeFM6ChPsM2M31zwVxPY5cgaMTJKi/l0qDvreWqps/7WqnTqABHKLwq08Hcz90nU+Y2Z7fI\\\\u003d\\\",\\\"tag\\\":\\\"/1bc8yjdhQV9RKMYM+2oG3QUecl469N4hZ0sNVvC/nI\\\\u003d\\\"}\"}\n";
-
+            //var encrytedData = "{\"signature\":\"MEUCIGE2lqzSMTFjCjNK8xkmOV2wTHRobEJouD9bKX/mOU05AiEA6fL3Cl+e6LCrtcxa3FqtFV1qdkebwh0TGoxn9SRCmr0\\u003d\",\"intermediateSigningKey\":{\"signedKey\":\"{\\\"keyValue\\\":\\\"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEoo1+38SkcLa8iEpL68zMw1qdhF/qUyJVuQXETO34XVh+/2vQv3g6c7C2oTzxXBCwA7vCiBMowaU8hzfnaRO6aQ\\\\u003d\\\\u003d\\\",\\\"keyExpiration\\\":\\\"1666849559604\\\"}\",\"signatures\":[\"MEUCIDaYfD+XhPw0sihdOuZWKy90hCpYlXTZGw57h9IuKYzXAiEA++N/pwD4KgaG+nvRSk/RWqWBTVok0DwbcfCKtJcd8O0\\u003d\"]},\"protocolVersion\":\"ECv2\",\"signedMessage\":\"{\\\"encryptedMessage\\\":\\\"k78lqEB7rhMCa6OSvDKanRVL97GLsBRDmayt0P7lcDJ9yc+tW5h55PQidM+T50Mox8fIZF6uf4sBcak3faSEtH0JrYOrjiqo+/aqR2oDy5OIHeF4S4tOXjYcz5cAXWBp9kQe4zpnQ0Oz2Pv8zcw40l3hnHehAC4iTFAIABuFYiJJshZfnQkHt0JZHBxvBmj75/dOassRem0VJjvxXz/RFgtLZLPm3A6yw0chDvN+YcbsgBVrJAnfrAox5u2IQfO0MC8pSfRhnKW4ZvasZb29LJAofNOEOXH929AA65WQ/OiS+f4Fofng/qnvFZBxswjC2Q8uIAnZhsDveBJdnb9Dl5sF6Ui/6UxOGENh2Co3o0l/odFaG4Sw+paU4XQeLS4z8QEO7+nEmTPyHAz4U3bMqtDAdP4GWovNG2r/ABR+bcEDUhloRQeOFQqHPW7uofTD/spketegSQW66UJWcnoLsuGFgh4nK8zBifRrePnu0hAr9qYZCgbdkHjw/JNdSO749hD3Bb0LO2Ine2ZQ8sMNsh8F1xakn4cgVTsVjOiQ0nQmmdzVdOM4pOYuMj7O8dYkZ0usRg0fD1wV\\\",\\\"ephemeralPublicKey\\\":\\\"BF4WwdJDM05iwqB5IeFM6ChPsM2M31zwVxPY5cgaMTJKi/l0qDvreWqps/7WqnTqABHKLwq08Hcz90nU+Y2Z7fI\\\\u003d\\\",\\\"tag\\\":\\\"/1bc8yjdhQV9RKMYM+2oG3QUecl469N4hZ0sNVvC/nI\\\\u003d\\\"}\"}\n";
+            //var encrytedData = "{\"signature\":\"MEYCIQDzxhFXnEZ+mbuhK2MQEqw7Gm0v5GiPXovl/3pn6zoziQIhAKwH2pfaT+uJHB0OG1vyRSlMNg9syvL6PPjHz9k8DOY1\",\"intermediateSigningKey\":{\"signedKey\":\"{\\\"keyValue\\\":\\\"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE6/VAKK0Cd/EjN/EdkEwGPzciAhTST4LiAFLbEvGSn216YMBVobVJZSxaXSzpBW0xuc3cx3QEKxnlTXUnTsbfhw\\\\u003d\\\\u003d\\\",\\\"keyExpiration\\\":\\\"1675316308611\\\"}\",\"signatures\":[\"MEYCIQDvjAJoDWre1RRx+qbX4qK4XqFGD4xENRpwcp0fO6bTBgIhAIQcOPP1LqX/UmYRXcOxPTRj/TGyJN2WNmHaQiwyIjjH\"]},\"protocolVersion\":\"ECv2\",\"signedMessage\":\"{\\\"encryptedMessage\\\":\\\"5tex/0jgKM3pa7Np6FXKR7ESNDjIObbimwdwaxyke5r+9mLXIPBy1k6Ozi6L+1ed+yA+t/ClWbbGM2Edw70jdLwGp3IoPyGuSfHcMBzaflmIMph8wUoBeSyTcWeyHRRC8DueYH6s+O4X1VSZHcio7d5uMWvbnF7XzIqLPTfOrxSz77Y/Se5WDxt+whwTs9BM//nSXm3EecJyjgozeKL2iJBVjyYLJaI4A1IN5LFGu/E1iN6SklmWZBZAATI8CerrpiURzJTU3nQp+rtzuHoBq7EyAZPO3J2Btfrk3Wo06a7EuyPt8KReWe99jShf594EK01qjxAtXJiCSvysmOuv9ps7kT/DEAD0Ds4/rx9Wj4do2aTQPFrygJnx0Fm8dl8tQw7uqMpVzwNbu/Nz0kBX7VHPFddoE7vD0PynVOfA2LW4TZ2+zSswhUKS8P//Gyq1n6SRCRCP4MHa69KiSdKAPQXlB1PM+998KKaU8/aBT1od5aQHz9SL8zL1y/6TBWwjKc8T/GCjtpH3FBSxMmMchkNA0gSivmOQGleCR2vBDyxoxuo+H4jpWuud3kozP18OPvNCygVIY30r\\\",\\\"ephemeralPublicKey\\\":\\\"BFGZrB3qaXWNBBBoMVQ9ggqi+HV1mCE4OfWPD7WgUTpk0bkXvasl4Wi5jrYCtJOkgyOAFqOkUMeWxbc3ZFb32NQ\\\\u003d\\\",\\\"tag\\\":\\\"KZCVUG1HU1ZF26U1kuXfc3ZRXHAWB8EUkUH6NwJBnyA\\\\u003d\\\"}\"}\n";
+            var encrytedData = "{\"signature\":\"MEYCIQC3o6offqq471vUTqZG14BmU7binEVRPD5Kwi7UprrhSQIhAIlh4FgVDS9Zq3VQC52yj34OxV1xGb+5dhxEp7PyPhQx\",\"intermediateSigningKey\":{\"signedKey\":\"{\\\"keyValue\\\":\\\"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEebi9PV9flfAqOyeLXYsXsFYEUGE/EaFBe/4SvB4NuYCIiYAOkA8bwIMQYq1XV2YHYynTi7+Is04qHQZqfUjNMw\\\\u003d\\\\u003d\\\",\\\"keyExpiration\\\":\\\"1675333505895\\\"}\",\"signatures\":[\"MEUCIQDf5BAZMgiV16ELjcEFDCxiYjwvkmO2DodKHVF8fOyLnwIgdp9W2WeahCBuFxXnbzY+EsjEkdQJuM7Y15jdjlkIqW0\\u003d\"]},\"protocolVersion\":\"ECv2\",\"signedMessage\":\"{\\\"encryptedMessage\\\":\\\"qUwPgWll1hlDZiWSkyHWYQVu7JZDia3xCeagKLYFAdOX9MRWCF5+CLcJO4Pz65YbHqtHNhHUYb6KDgGnUM+P9ZPqmEK0lC+ZcXPzpL9WCwclCTYdHJRfHd8OL5eatu6Mq3D2h091GkZDSy6vItkKWt44JB/FUAqNxncdSGhOG6VJIejmy1HCZuTpOjOwoX3gWXH+iLtAJD7KFv97ZVVeEsskYX5LIwZzsNtPFzoBYNSm0JLs0ryWudaQQEjt+FEUJWAmLVBv6v4L7Q11j12qky9D0nj6FU6R2U+MmS70exQFgyoy4fjnco7yk+Hhf+c6g/37VXN2BLUCNhUJsBYU27zDaFrVuxiUieq5lsI3voghL2Y1tZSk7CwoDJ6qiCmYnPTO5MVdyVdLhtQXml2oqbm/qxvjdFE7vXXr7nbztfSzhuy9mLXz142LZLMvOytYOCLDmPUNxmFn++becnAlO+LuBnafOqhv7CVXlsQ8ba9w2ef2cRxjqVJHMiGm3pxHR3Xtb/Quthr/9hbu4xnriRqnIoaY+BEqtOuAZ5dRSJHxVFLnVYDJ0TxbJgWGsD8mikFcPYFYyhNX\\\",\\\"ephemeralPublicKey\\\":\\\"BORlmWjOMrcBFI+p5kaZTMr/qNoD5pBX36YiV7kKxlMaEgqKq55gKIJtz1FmTrx5Sg20KV+b3H4J5ETJ0yTio3I\\\\u003d\\\",\\\"tag\\\":\\\"4BaExW/ZfZs3/CMqn49jI9so2rg9PuKTCjtFXnP8cUc\\\\u003d\\\"}\"}";
+            var base64Data = Base64Encode(encrytedData);
+            
             var paymentResponse = 
                 await client.CreateGatewayGooglepayPaymentAsync(
                     merchantOrderId,
@@ -414,12 +420,12 @@ namespace TestApp
                 10m,
                 currency,
                 "BUY 0.00001 BTC FOR 10 USD",
-                    Base64Encode(encrytedData),
-                "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?success=true", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?success=true", 
-                "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?failure=true", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?failure=true",
-                "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?cancel=true",
-                "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?inproccess=true",
-                "https://webhook.site/ed3ecb08-f6dc-4b72-ac8e-3345b1edd98c?return=true",
+                    encrytedData, //Base64Encode(encrytedData),
+                "https://webhook.site/5f279c4c-e91f-4c3a-906c-8a38cc54e926?success=true", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?success=true", 
+                "https://webhook.site/5f279c4c-e91f-4c3a-906c-8a38cc54e926?failure=true", //https://webhook.site/6b936147-bee8-4468-86f2-c885af1735b3?failure=true",
+                "https://webhook.site/5f279c4c-e91f-4c3a-906c-8a38cc54e926?cancel=true",
+                "https://webhook.site/5f279c4c-e91f-4c3a-906c-8a38cc54e926?inproccess=true",
+                "https://webhook.site/5f279c4c-e91f-4c3a-906c-8a38cc54e926?return=true",
                 DateTime.UtcNow,
                 new PaymentRequestCustomer
                 {
@@ -462,6 +468,43 @@ namespace TestApp
         public static string Base64Encode(string plainText) {
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
             return System.Convert.ToBase64String(plainTextBytes);
+        }
+        
+        private static async Task TestCardBin(string locale, string currency)
+        {
+            var terminalcCode = Environment.GetEnvironmentVariable("MyJetWallet-UnlimintSigner-Googlepay-" + currency +"-WalletId");
+            var password = Environment.GetEnvironmentVariable("MyJetWallet-UnlimintSigner-Googlepay-" + currency + "-Password");
+
+            var authClient = new UnlimintAuthClient(terminalcCode, password, UnlimintNetwork.Test);
+            var client = new UnlimintClient(null, UnlimintNetwork.Test);
+
+            var token = await authClient.GetAuthorizationTokenAsync();
+            if (!token.Success || string.IsNullOrEmpty(token.Data?.AccessToken))
+            {
+                Console.WriteLine(token.Message);
+            }
+
+            client.SetAccessToken(token?.Data?.AccessToken);
+
+            var bin = "535456";
+            var pan = "53545606";
+            var cardResponse = 
+                await client.GetCardInfoAsync(bin);
+            if (!cardResponse.Success)
+            {
+                Console.WriteLine(cardResponse.Message);
+            }
+
+            var card1 = JsonConvert.SerializeObject(cardResponse.Data[0]);
+            
+            cardResponse = 
+                await client.GetCardInfoAsync(pan);
+            if (!cardResponse.Success)
+            {
+                Console.WriteLine(cardResponse.Message);
+            }
+            
+            var card2 = JsonConvert.SerializeObject(cardResponse.Data[0]);
         }
     }
 }

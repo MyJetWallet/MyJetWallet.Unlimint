@@ -347,6 +347,13 @@ namespace MyJetWallet.Unlimint
             string requestId,
             CancellationToken cancellationToken = default);
 
+        /// <summary>
+        /// Service allows Merchant to get card information by card BIN.
+        /// https://integration.unlimint.com/#card_info
+        /// </summary>
+        Task<WebCallResult<List<CardInfo>>> GetCardInfoAsync(
+            string cardBin, CancellationToken cancellationToken = default);
+
         #endregion
     }
 }
