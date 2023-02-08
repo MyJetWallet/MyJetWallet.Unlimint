@@ -16,14 +16,9 @@ namespace MyJetWallet.Unlimint
         #region Cards
 
         public async Task<WebCallResult<List<CardInfo>>> GetCardInfoAsync(
-            string cardBin, CancellationToken cancellationToken = default)
+            CardBinRequest cardBinRequest, CancellationToken cancellationToken = default)
         {
-            var data = new CardBinRequest
-            {
-                Bin = cardBin,
-            };
-
-            return await PostAsync<List<CardInfo>>($"{EndpointUrl}/card_info", data, cancellationToken);
+            return await PostAsync<List<CardInfo>>($"{EndpointUrl}/card_info", cardBinRequest, cancellationToken);
         }
     }
 

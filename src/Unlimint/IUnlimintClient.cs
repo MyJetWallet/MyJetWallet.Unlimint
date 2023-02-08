@@ -352,7 +352,7 @@ namespace MyJetWallet.Unlimint
         /// https://integration.unlimint.com/#card_info
         /// </summary>
         Task<WebCallResult<List<CardInfo>>> GetCardInfoAsync(
-            string cardBin, CancellationToken cancellationToken = default);
+            CardBinRequest cardBinRequest, CancellationToken cancellationToken = default);
 
         #endregion
     }
