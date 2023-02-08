@@ -13,8 +13,8 @@ The *TestApp.csproj* project file contains:
 
 - 1 namespaces.
 - 1 named types.
-- 497 total lines of source code.
-- Approximately 91 lines of executable code.
+- 501 total lines of source code.
+- Approximately 90 lines of executable code.
 - The highest cyclomatic complexity is 8 :warning:.
 
 <details>
@@ -28,8 +28,8 @@ The *TestApp.csproj* project file contains:
 The `TestApp` namespace contains 1 named types.
 
 - 1 named types.
-- 497 total lines of source code.
-- Approximately 91 lines of executable code.
+- 501 total lines of source code.
+- Approximately 90 lines of executable code.
 - The highest cyclomatic complexity is 8 :warning:.
 
 <details>
@@ -41,8 +41,8 @@ The `TestApp` namespace contains 1 named types.
 <br>
 
 - The `Program` contains 10 members.
-- 494 total lines of source code.
-- Approximately 91 lines of executable code.
+- 498 total lines of source code.
+- Approximately 90 lines of executable code.
 - The highest cyclomatic complexity is 8 :warning:.
 
 | Member kind | Line number | Maintainability index | Cyclomatic complexity | Depth of inheritance | Class coupling | Lines of source / executable code |
@@ -50,9 +50,9 @@ The `TestApp` namespace contains 1 named types.
 | Field | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/TestApp/Program.cs#L18' title='UnlimintAuthClient Program._authClient'>18</a> | 100 | 0 :heavy_check_mark: | 0 | 1 | 1 / 0 |
 | Field | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/TestApp/Program.cs#L19' title='UnlimintClient Program._client'>19</a> | 100 | 0 :heavy_check_mark: | 0 | 1 | 1 / 0 |
 | Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/TestApp/Program.cs#L468' title='string Program.Base64Encode(string plainText)'>468</a> | 88 | 1 :heavy_check_mark: | 0 | 1 | 4 / 2 |
-| Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/TestApp/Program.cs#L21' title='Task Program.Main(string[] args)'>21</a> | 76 | 1 :heavy_check_mark: | 0 | 2 | 125 / 4 |
+| Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/TestApp/Program.cs#L21' title='Task Program.Main(string[] args)'>21</a> | 80 | 1 :heavy_check_mark: | 0 | 2 | 125 / 3 |
 | Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/TestApp/Program.cs#L157' title='Task Program.TestAlternativeMethod(string locale, string currency)'>157</a> | 54 | 7 :heavy_check_mark: | 0 | 8 | 71 / 15 |
-| Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/TestApp/Program.cs#L473' title='Task Program.TestCardBin(string locale, string currency)'>473</a> | 54 | 8 :warning: | 0 | 4 | 36 / 18 |
+| Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/TestApp/Program.cs#L473' title='Task Program.TestCardBin(string locale, string currency)'>473</a> | 54 | 8 :warning: | 0 | 5 | 40 / 18 |
 | Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/TestApp/Program.cs#L230' title='Task Program.TestGatewayMethod(string locale, string currency)'>230</a> | 53 | 7 :heavy_check_mark: | 0 | 10 | 99 / 16 |
 | Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/TestApp/Program.cs#L393' title='Task Program.TestGooglepayMethod(string locale, string currency)'>393</a> | 53 | 7 :heavy_check_mark: | 0 | 7 | 74 / 17 |
 | Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/TestApp/Program.cs#L330' title='Task Program.TestProdBankMethod(string locale, string currency)'>330</a> | 55 | 7 :heavy_check_mark: | 0 | 6 | 61 / 17 |
@@ -90,8 +90,8 @@ The *MyJetWallet.Unlimint.csproj* project file contains:
 
 - 6 namespaces.
 - 55 named types.
-- 2,637 total lines of source code.
-- Approximately 758 lines of executable code.
+- 2,631 total lines of source code.
+- Approximately 755 lines of executable code.
 - The highest cyclomatic complexity is 43 :exploding_head:.
 
 <details>
@@ -598,8 +598,8 @@ The `MyJetWallet.Unlimint.Models` namespace contains 7 named types.
 The `MyJetWallet.Unlimint.Models.Payments` namespace contains 33 named types.
 
 - 33 named types.
-- 628 total lines of source code.
-- Approximately 432 lines of executable code.
+- 627 total lines of source code.
+- Approximately 430 lines of executable code.
 - The highest cyclomatic complexity is 2 :heavy_check_mark:.
 
 <details>
@@ -664,13 +664,13 @@ The `MyJetWallet.Unlimint.Models.Payments` namespace contains 33 named types.
 <br>
 
 - The `CardBinRequest` contains 1 members.
-- 6 total lines of source code.
-- Approximately 4 lines of executable code.
+- 5 total lines of source code.
+- Approximately 2 lines of executable code.
 - The highest cyclomatic complexity is 2 :heavy_check_mark:.
 
 | Member kind | Line number | Maintainability index | Cyclomatic complexity | Depth of inheritance | Class coupling | Lines of source / executable code |
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| Property | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/Models/Payments/CardBinRequest.cs#L10' title='string CardBinRequest.Bin'>10</a> | 100 | 2 :heavy_check_mark: | 0 | 3 | 3 / 4 |
+| Property | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/Models/Payments/CardBinRequest.cs#L9' title='string CardBinRequest.Bin'>9</a> | 100 | 2 :heavy_check_mark: | 0 | 2 | 2 / 2 |
 
 <a href="#CardBinRequest-class-diagram">:link: to `CardBinRequest` class diagram</a>
 
@@ -1541,8 +1541,8 @@ The `MyJetWallet.Unlimint.Models.Payments` namespace contains 33 named types.
 The `MyJetWallet.Unlimint` namespace contains 7 named types.
 
 - 7 named types.
-- 1,605 total lines of source code.
-- Approximately 224 lines of executable code.
+- 1,600 total lines of source code.
+- Approximately 223 lines of executable code.
 - The highest cyclomatic complexity is 43 :exploding_head:.
 
 <details>
@@ -1621,7 +1621,7 @@ The `MyJetWallet.Unlimint` namespace contains 7 named types.
 | Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/IUnlimintClient.cs#L62' title='Task<WebCallResult<PaymentGatewayCreationResponse>> IUnlimintClient.CreatePaymentAsync(string merchantOrderId, string requestId, string email, string phoneNumber, string sessionId, string ipAddress, decimal amount, string currency, string sourceId, bool generateToken, bool threeDsChallengeIndicator, string description, string verificationUrlSuccess, string verificationUrlFailure, string verificationUrlCancel, string verificationUrlInProcess, string verificationUrlReturn, DateTime time, string paymentMethod, string clientId, CancellationToken cancellationToken = null)'>62</a> | 87 | 1 :heavy_check_mark: | 0 | 6 | 22 / 2 |
 | Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/IUnlimintClient.cs#L110' title='WebCallResult<PaymentGatewayCreationResponse> IUnlimintClient.CreatePaymentByCardToken(string merchantOrderId, string requestId, string email, string phoneNumber, string sessionId, string ipAddress, decimal amount, string currency, string sourceId, string cardToken, bool threeDsChallengeIndicator, string description, string verificationUrlSuccess, string verificationUrlFailure, string verificationUrlCancel, string verificationUrlInProcess, string verificationUrlReturn, DateTime time, string paymentMethod, string clientId, CancellationToken cancellationToken = null)'>110</a> | 87 | 1 :heavy_check_mark: | 0 | 5 | 46 / 2 |
 | Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/IUnlimintClient.cs#L132' title='Task<WebCallResult<PaymentGatewayCreationResponse>> IUnlimintClient.CreatePaymentByCardTokenAsync(string merchantOrderId, string requestId, string email, string phoneNumber, string sessionId, string ipAddress, decimal amount, string currency, string sourceId, string cardToken, bool threeDsChallengeIndicator, string description, string verificationUrlSuccess, string verificationUrlFailure, string verificationUrlCancel, string verificationUrlInProcess, string verificationUrlReturn, DateTime time, string paymentMethod, string clientId, CancellationToken cancellationToken = null)'>132</a> | 87 | 1 :heavy_check_mark: | 0 | 6 | 22 / 2 |
-| Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/IUnlimintClient.cs#L354' title='Task<WebCallResult<List<CardInfo>>> IUnlimintClient.GetCardInfoAsync(string cardBin, CancellationToken cancellationToken = null)'>354</a> | 87 | 1 :heavy_check_mark: | 0 | 5 | 6 / 2 |
+| Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/IUnlimintClient.cs#L354' title='Task<WebCallResult<List<CardInfo>>> IUnlimintClient.GetCardInfoAsync(CardBinRequest cardBinRequest, CancellationToken cancellationToken = null)'>354</a> | 87 | 1 :heavy_check_mark: | 0 | 6 | 6 / 2 |
 | Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/IUnlimintClient.cs#L338' title='WebCallResult<PaymentResponse> IUnlimintClient.GetPaymentById(string id, CancellationToken cancellationToken = null)'>338</a> | 87 | 1 :heavy_check_mark: | 0 | 3 | 9 / 2 |
 | Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/IUnlimintClient.cs#L342' title='Task<WebCallResult<PaymentResponse>> IUnlimintClient.GetPaymentByIdAsync(string id, CancellationToken cancellationToken = null)'>342</a> | 87 | 1 :heavy_check_mark: | 0 | 4 | 3 / 2 |
 | Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/IUnlimintClient.cs#L346' title='Task<WebCallResult<PaymentDataResponse>> IUnlimintClient.GetPaymentByMerchantOrderIdAsync(string merchantOrderId, string requestId, CancellationToken cancellationToken = null)'>346</a> | 87 | 1 :heavy_check_mark: | 0 | 4 | 3 / 2 |
@@ -1687,8 +1687,8 @@ The `MyJetWallet.Unlimint` namespace contains 7 named types.
 <br>
 
 - The `UnlimintClient` contains 83 members.
-- 976 total lines of source code.
-- Approximately 122 lines of executable code.
+- 971 total lines of source code.
+- Approximately 121 lines of executable code.
 - The highest cyclomatic complexity is 43 :exploding_head:.
 
 | Member kind | Line number | Maintainability index | Cyclomatic complexity | Depth of inheritance | Class coupling | Lines of source / executable code |
@@ -1719,7 +1719,7 @@ The `MyJetWallet.Unlimint` namespace contains 7 named types.
 | Property | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.cs#L27' title='string UnlimintClient.EndpointUrl'>27</a> | 100 | 2 :heavy_check_mark: | 0 | 0 | 3 / 0 |
 | Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.cs#L184' title='WebCallResult<T> UnlimintClient.EvaluateResponse<T>(HttpResponseMessage response, string content)'>184</a> | 66 | 3 :heavy_check_mark: | 0 | 4 | 18 / 9 |
 | Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.cs#L121' title='Task<WebCallResult<T>> UnlimintClient.GetAsync<T>(string url, CancellationToken cancellationToken = null)'>121</a> | 71 | 1 :heavy_check_mark: | 0 | 5 | 10 / 5 |
-| Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.Cards.cs#L18' title='Task<WebCallResult<List<CardInfo>>> UnlimintClient.GetCardInfoAsync(string cardBin, CancellationToken cancellationToken = null)'>18</a> | 76 | 1 :heavy_check_mark: | 0 | 7 | 12 / 3 |
+| Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.Cards.cs#L18' title='Task<WebCallResult<List<CardInfo>>> UnlimintClient.GetCardInfoAsync(CardBinRequest cardBinRequest, CancellationToken cancellationToken = null)'>18</a> | 81 | 1 :heavy_check_mark: | 0 | 7 | 7 / 2 |
 | Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.cs#L77' title='HttpClient UnlimintClient.GetHttpClient()'>77</a> | 74 | 3 :heavy_check_mark: | 0 | 3 | 17 / 4 |
 | Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.Payments.cs#L257' title='WebCallResult<PaymentResponse> UnlimintClient.GetPaymentById(string paymentId, CancellationToken cancellationToken = null)'>257</a> | 84 | 1 :heavy_check_mark: | 0 | 5 | 9 / 2 |
 | Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.Payments.cs#L261' title='Task<WebCallResult<PaymentResponse>> UnlimintClient.GetPaymentByIdAsync(string paymentId, CancellationToken cancellationToken = null)'>261</a> | 81 | 1 :heavy_check_mark: | 0 | 5 | 5 / 2 |
@@ -2740,7 +2740,7 @@ class IUnlimintClient{
     +GetPaymentById(string id, CancellationToken cancellationToken = null)* WebCallResult<PaymentResponse>
     +GetPaymentByIdAsync(string id, CancellationToken cancellationToken = null)* Task<WebCallResult<PaymentResponse>>
     +GetPaymentByMerchantOrderIdAsync(string merchantOrderId, string requestId, CancellationToken cancellationToken = null)* Task<WebCallResult<PaymentDataResponse>>
-    +GetCardInfoAsync(string cardBin, CancellationToken cancellationToken = null)* Task<WebCallResult<List<CardInfo>>>
+    +GetCardInfoAsync(CardBinRequest cardBinRequest, CancellationToken cancellationToken = null)* Task<WebCallResult<List<CardInfo>>>
 }
 
 ```
@@ -2841,7 +2841,7 @@ class UnlimintClient{
     +string EndpointUrl
     +SecureString AccessToken
     +bool ThrowThenErrorResponse
-    +GetCardInfoAsync(string cardBin, CancellationToken cancellationToken = null) Task<WebCallResult<List<CardInfo>>>
+    +GetCardInfoAsync(CardBinRequest cardBinRequest, CancellationToken cancellationToken = null) Task<WebCallResult<List<CardInfo>>>
     +.ctor(string accessToken, UnlimintNetwork network = UnlimintNetwork.Main) UnlimintClient
     +.ctor(string accessToken, string apiRootUrl) UnlimintClient
     +SetAccessToken(string accessToken) void
