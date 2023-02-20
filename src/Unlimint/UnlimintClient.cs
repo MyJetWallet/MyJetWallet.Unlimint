@@ -143,8 +143,7 @@ namespace MyJetWallet.Unlimint
             {
                 Console.WriteLine($"POST: {url}\nBody: {data}\nResp: {content}");
             }
-
-            // Return
+            
             return this.EvaluateResponse<T>(response, content);
         }
 
@@ -189,15 +188,11 @@ namespace MyJetWallet.Unlimint
                 return new WebCallResult<T>(response, default, HttpStatusCode.NotFound, "Empty Response");
             }
             
-            var errorMessage = string.Empty;
-            if (response.StatusCode != HttpStatusCode.OK)
-            {
-                errorMessage = content;
-            }
-            var obj = JsonConvert.DeserializeObject<T>(content);
+            var errorMessage = response.StatusCode == HttpStatusCode.OK ? string.Empty : content;
+            var obj = response.StatusCode == HttpStatusCode.OK ? JsonConvert.DeserializeObject<T>(content) :  default;
             var objCallResult = new CallResult<T>(obj, (int)response.StatusCode, errorMessage);
+            
             return new WebCallResult<T>(response, objCallResult);
-
         }
 
         private void ThrowErrorExceptionIfEnabled(HttpStatusCode code, string message)
