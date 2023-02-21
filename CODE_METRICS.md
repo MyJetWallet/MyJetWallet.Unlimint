@@ -90,8 +90,8 @@ The *MyJetWallet.Unlimint.csproj* project file contains:
 
 - 6 namespaces.
 - 55 named types.
-- 2,631 total lines of source code.
-- Approximately 755 lines of executable code.
+- 2,626 total lines of source code.
+- Approximately 753 lines of executable code.
 - The highest cyclomatic complexity is 43 :exploding_head:.
 
 <details>
@@ -1541,8 +1541,8 @@ The `MyJetWallet.Unlimint.Models.Payments` namespace contains 33 named types.
 The `MyJetWallet.Unlimint` namespace contains 7 named types.
 
 - 7 named types.
-- 1,600 total lines of source code.
-- Approximately 223 lines of executable code.
+- 1,595 total lines of source code.
+- Approximately 221 lines of executable code.
 - The highest cyclomatic complexity is 43 :exploding_head:.
 
 <details>
@@ -1687,8 +1687,8 @@ The `MyJetWallet.Unlimint` namespace contains 7 named types.
 <br>
 
 - The `UnlimintClient` contains 83 members.
-- 971 total lines of source code.
-- Approximately 121 lines of executable code.
+- 966 total lines of source code.
+- Approximately 119 lines of executable code.
 - The highest cyclomatic complexity is 43 :exploding_head:.
 
 | Member kind | Line number | Maintainability index | Cyclomatic complexity | Depth of inheritance | Class coupling | Lines of source / executable code |
@@ -1714,10 +1714,10 @@ The `MyJetWallet.Unlimint` namespace contains 7 named types.
 | Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.Payments.cs#L67' title='Task<WebCallResult<PaymentGatewayCreationResponse>> UnlimintClient.CreatePaymentAsync(string merchantOrderId, string requestId, string email, string phoneNumber, string sessionId, string ipAddress, decimal amount, string currency, string sourceId, bool generateToken, bool useThreeDsChallengeIndicator, string description, string verificationUrlSuccess, string verificationUrlFailure, string verificationUrlCancel, string verificationUrlInProcess, string verificationUrlReturn, DateTime time, string paymentMethod, string clientId, CancellationToken cancellationToken = null)'>67</a> | 68 | 1 :heavy_check_mark: | 0 | 13 | 65 / 3 |
 | Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.Payments.cs#L137' title='WebCallResult<PaymentGatewayCreationResponse> UnlimintClient.CreatePaymentByCardToken(string merchantOrderId, string requestId, string email, string phoneNumber, string sessionId, string ipAddress, decimal amount, string currency, string sourceId, string cardToken, bool threeDsChallengeIndicator, string description, string verificationUrlSuccess, string verificationUrlFailure, string verificationUrlCancel, string verificationUrlInProcess, string verificationUrlReturn, DateTime time, string paymentMethod, string clientId, CancellationToken cancellationToken = null)'>137</a> | 75 | 1 :heavy_check_mark: | 0 | 7 | 47 / 2 |
 | Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.Payments.cs#L182' title='Task<WebCallResult<PaymentGatewayCreationResponse>> UnlimintClient.CreatePaymentByCardTokenAsync(string merchantOrderId, string requestId, string email, string phoneNumber, string sessionId, string ipAddress, decimal amount, string currency, string sourceId, string cardToken, bool useThreeDsChallengeIndicator, string description, string verificationUrlSuccess, string verificationUrlFailure, string verificationUrlCancel, string verificationUrlInProcess, string verificationUrlReturn, DateTime time, string paymentMethod, string clientId, CancellationToken cancellationToken = null)'>182</a> | 67 | 2 :heavy_check_mark: | 0 | 14 | 67 / 3 |
-| Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.cs#L170' title='Task<WebCallResult<T>> UnlimintClient.DeleteAsync<T>(string url, object obj = null, CancellationToken cancellationToken = null)'>170</a> | 63 | 2 :heavy_check_mark: | 0 | 7 | 13 / 9 |
-| Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.cs#L213' title='void UnlimintClient.Dispose()'>213</a> | 81 | 4 :heavy_check_mark: | 0 | 3 | 8 / 3 |
+| Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.cs#L169' title='Task<WebCallResult<T>> UnlimintClient.DeleteAsync<T>(string url, object obj = null, CancellationToken cancellationToken = null)'>169</a> | 63 | 2 :heavy_check_mark: | 0 | 7 | 13 / 9 |
+| Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.cs#L208' title='void UnlimintClient.Dispose()'>208</a> | 81 | 4 :heavy_check_mark: | 0 | 3 | 8 / 3 |
 | Property | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.cs#L27' title='string UnlimintClient.EndpointUrl'>27</a> | 100 | 2 :heavy_check_mark: | 0 | 0 | 3 / 0 |
-| Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.cs#L184' title='WebCallResult<T> UnlimintClient.EvaluateResponse<T>(HttpResponseMessage response, string content)'>184</a> | 66 | 3 :heavy_check_mark: | 0 | 4 | 18 / 9 |
+| Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.cs#L183' title='WebCallResult<T> UnlimintClient.EvaluateResponse<T>(HttpResponseMessage response, string content)'>183</a> | 68 | 4 :heavy_check_mark: | 0 | 4 | 14 / 7 |
 | Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.cs#L121' title='Task<WebCallResult<T>> UnlimintClient.GetAsync<T>(string url, CancellationToken cancellationToken = null)'>121</a> | 71 | 1 :heavy_check_mark: | 0 | 5 | 10 / 5 |
 | Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.Cards.cs#L18' title='Task<WebCallResult<List<CardInfo>>> UnlimintClient.GetCardInfoAsync(CardBinRequest cardBinRequest, CancellationToken cancellationToken = null)'>18</a> | 81 | 1 :heavy_check_mark: | 0 | 7 | 7 / 2 |
 | Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.cs#L77' title='HttpClient UnlimintClient.GetHttpClient()'>77</a> | 74 | 3 :heavy_check_mark: | 0 | 3 | 17 / 4 |
@@ -1766,14 +1766,14 @@ The `MyJetWallet.Unlimint` namespace contains 7 named types.
 | Field | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.Payments.Alternative.cs#L274' title='string UnlimintClient.PaymentAlternativeTypeWalmart'>274</a> | 93 | 0 :heavy_check_mark: | 0 | 0 | 1 / 1 |
 | Field | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.Payments.Alternative.cs#L297' title='string UnlimintClient.PaymentAlternativeTypeWesternUnion'>297</a> | 93 | 0 :heavy_check_mark: | 0 | 0 | 1 / 1 |
 | Field | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.Payments.Alternative.cs#L298' title='string UnlimintClient.PaymentAlternativeTypeZonaPago'>298</a> | 93 | 0 :heavy_check_mark: | 0 | 0 | 1 / 1 |
-| Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.cs#L132' title='Task<WebCallResult<T>> UnlimintClient.PostAsync<T>(string url, object obj = null, CancellationToken cancellationToken = null)'>132</a> | 63 | 3 :heavy_check_mark: | 0 | 6 | 18 / 9 |
+| Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.cs#L132' title='Task<WebCallResult<T>> UnlimintClient.PostAsync<T>(string url, object obj = null, CancellationToken cancellationToken = null)'>132</a> | 63 | 3 :heavy_check_mark: | 0 | 6 | 17 / 9 |
 | Property | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.cs#L22' title='bool UnlimintClient.PrintPostApiCalls'>22</a> | 100 | 2 :heavy_check_mark: | 0 | 0 | 1 / 1 |
 | Property | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.cs#L23' title='bool UnlimintClient.PrintPutApiCalls'>23</a> | 100 | 2 :heavy_check_mark: | 0 | 0 | 1 / 1 |
-| Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.cs#L151' title='Task<WebCallResult<T>> UnlimintClient.PutAsync<T>(string url, object obj = null, CancellationToken cancellationToken = null)'>151</a> | 63 | 3 :heavy_check_mark: | 0 | 6 | 18 / 9 |
+| Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.cs#L150' title='Task<WebCallResult<T>> UnlimintClient.PutAsync<T>(string url, object obj = null, CancellationToken cancellationToken = null)'>150</a> | 63 | 3 :heavy_check_mark: | 0 | 6 | 18 / 9 |
 | Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.cs#L64' title='void UnlimintClient.SetAccessToken(string accessToken)'>64</a> | 85 | 2 :heavy_check_mark: | 0 | 3 | 11 / 2 |
 | Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.cs#L90' title='void UnlimintClient.SetupHttpClient()'>90</a> | 64 | 2 :heavy_check_mark: | 0 | 9 | 19 / 9 |
 | Field | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.cs#L20' title='string UnlimintClient.TestPublicApi'>20</a> | 93 | 0 :heavy_check_mark: | 0 | 0 | 1 / 1 |
-| Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.cs#L203' title='void UnlimintClient.ThrowErrorExceptionIfEnabled(HttpStatusCode code, string message)'>203</a> | 85 | 2 :heavy_check_mark: | 0 | 3 | 7 / 2 |
+| Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.cs#L198' title='void UnlimintClient.ThrowErrorExceptionIfEnabled(HttpStatusCode code, string message)'>198</a> | 85 | 2 :heavy_check_mark: | 0 | 3 | 7 / 2 |
 | Property | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.cs#L31' title='bool UnlimintClient.ThrowThenErrorResponse'>31</a> | 100 | 2 :heavy_check_mark: | 0 | 0 | 1 / 1 |
 | Method | <a href='https://github.com/MyJetWallet/MyJetWallet.Unlimint/blob/master/src/Unlimint/UnlimintClient.Payments.Alternative.cs#L123' title='string UnlimintClient.ToString(PaymentAlternativeType paymentAlternativeType)'>123</a> | 66 | 43 :exploding_head: | 0 | 4 | 134 / 2 |
 
