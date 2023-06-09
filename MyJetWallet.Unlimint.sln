@@ -1,9 +1,9 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyJetWallet.Unlimint", "src\Unlimint\MyJetWallet.Unlimint.csproj", "{91E12075-4EF0-4700-80FB-031775A5CA6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyJetWallet.Unlimint", "src\MyJetWallet.Unlimint\MyJetWallet.Unlimint.csproj", "{91E12075-4EF0-4700-80FB-031775A5CA6B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp", "src\TestApp\TestApp.csproj", "{B4C7A887-03DE-41DF-8CCF-0268E3DC6318}"
 EndProject
