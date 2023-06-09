@@ -6,6 +6,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Unlimint\MyJetWallet.Unlimint.csproj" />
+      <ProjectReference Include="..\MyJetWallet.Unlimint\MyJetWallet.Unlimint.csproj" />
     </ItemGroup>
 </Project>
