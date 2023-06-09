@@ -155,6 +155,8 @@ namespace MyJetWallet.Unlimint
         /// <summary>
         /// Create a payment.
         /// </summary>
+        /// <param name="mainPaymentMethod"></param>
+        /// <param name="alternativeMethods"></param>
         /// <param name="merchantOrderId">Unique idempotency key. This key is utilized to ensure exactly-once execution of mutating requests.</param>
         /// <param name="requestId">Unique identifier of the public key used in encryption.</param>
         /// <param name="amount">Magnitude of the amount, in units of the currency, with a ..</param>
@@ -168,11 +170,10 @@ namespace MyJetWallet.Unlimint
         /// <param name="verificationUrlReturn"></param>
         /// <param name="time"></param>
         /// <param name="customer"></param>
+        /// <param name="shippingAddress"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        WebCallResult<PaymentGatewayCreationResponse> CreateAlternativePayment(
-            string mainPaymentMethod,
-            List<string> alternativeMethods,
+        WebCallResult<PaymentGatewayCreationResponse> CreateAlternativePayment(string paymentMethod,
             string merchantOrderId,
             string requestId,
             decimal amount,
@@ -186,11 +187,11 @@ namespace MyJetWallet.Unlimint
             string verificationUrlReturn,
             DateTime time,
             PaymentRequestCustomer customer,
+            ShippingAddress shippingAddress = null,
             CancellationToken cancellationToken = default);
         
         Task<WebCallResult<PaymentGatewayCreationResponse>> CreateAlternativePaymentAsync(
-            string mainPaymentMethod,
-            List<string> alternativeMethods,
+            string paymentMethod,
             string merchantOrderId,
             string requestId,
             decimal amount,
@@ -204,6 +205,7 @@ namespace MyJetWallet.Unlimint
             string verificationUrlReturn,
             DateTime time,
             PaymentRequestCustomer customer,
+            ShippingAddress shippingAddress = null,
             CancellationToken cancellationToken = default);
 
 

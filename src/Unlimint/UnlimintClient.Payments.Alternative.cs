@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO.Compression;
 using System.Threading;
 using System.Threading.Tasks;
 using MyJetWallet.Unlimint.Models;
 using MyJetWallet.Unlimint.Models.Payments;
-using System.Linq;
-using System.Security.AccessControl;
-using System.Security.Principal;
 
 namespace MyJetWallet.Unlimint
 {
@@ -17,20 +13,19 @@ namespace MyJetWallet.Unlimint
         #region PaymentsAlternative
 
         public WebCallResult<PaymentGatewayCreationResponse> CreateAlternativePayment(
-            string mainPaymentMethod, List<string> paymentAlternativeMethods, string merchantOrderId,
+            string paymentMethod, string merchantOrderId,
             string requestId, decimal amount,
             string currency, bool useThreeDsChallengeIndicator, string description,
             string verificationUrlSuccess, string verificationUrlFailure, string verificationUrlCancel,
             string verificationUrlInProcess, string verificationUrlReturn, DateTime time,
-            PaymentRequestCustomer customer, CancellationToken cancellationToken = default) =>
-            CreateAlternativePaymentAsync(mainPaymentMethod, paymentAlternativeMethods, merchantOrderId, requestId, amount,
+            PaymentRequestCustomer customer, ShippingAddress shippingAddress = null, CancellationToken cancellationToken = default) =>
+            CreateAlternativePaymentAsync(paymentMethod, merchantOrderId, requestId, amount,
                 currency, useThreeDsChallengeIndicator,
                 description, verificationUrlSuccess, verificationUrlFailure, verificationUrlCancel,
-                verificationUrlInProcess, verificationUrlReturn, time, customer, cancellationToken = default).Result;
+                verificationUrlInProcess, verificationUrlReturn, time, customer, shippingAddress = null ,cancellationToken = default).Result;
 
         public async Task<WebCallResult<PaymentGatewayCreationResponse>> CreateAlternativePaymentAsync(
-            string mainMethod,
-            List<string> extentionMethods,
+            string paymentMethod,
             string merchantOrderId,
             string requestId,
             decimal amount,
@@ -43,12 +38,12 @@ namespace MyJetWallet.Unlimint
             string verificationUrlInProcess,
             string verificationUrlReturn,
             DateTime time,
-            PaymentRequestCustomer customer,
+            PaymentRequestCustomer customer, 
+            ShippingAddress shippingAddress = null,
             CancellationToken cancellationToken = default)
         {
             var request = CreateAlternativePaymentRequest(
-                mainMethod,
-                extentionMethods,
+                paymentMethod,
                 merchantOrderId,
                 requestId,
                 amount,
@@ -62,14 +57,14 @@ namespace MyJetWallet.Unlimint
                 verificationUrlReturn,
                 time,
                 customer,
+                shippingAddress,
                 cancellationToken);
             return await PostAsync<PaymentGatewayCreationResponse>($"{EndpointUrl}/payments", request,
                 cancellationToken);
         }
 
         private PaymentRequest CreateAlternativePaymentRequest(
-            string mainMethod,
-            List<string> paymentMethods,
+            string paymentMethod,
             string merchantOrderId,
             string requestId,
             decimal amount,
@@ -83,6 +78,7 @@ namespace MyJetWallet.Unlimint
             string verificationUrlReturn,
             DateTime time,
             PaymentRequestCustomer customer,
+            ShippingAddress shippingAddress = null,
             CancellationToken cancellationToken = default)
         {
             var request = new PaymentRequest
@@ -96,6 +92,7 @@ namespace MyJetWallet.Unlimint
                 {
                     Description = description,
                     Id = merchantOrderId,
+                    ShippingAddress = shippingAddress,
                 },
                 PaymentData = new PaymentRequestPaymentData
                 {
@@ -104,8 +101,7 @@ namespace MyJetWallet.Unlimint
                     Note = description,
                     ThreeDsChallengeIndicator = useThreeDsChallengeIndicator == false ? "01" : "04"
                 },
-                PaymentMethod = mainMethod,
-                PaymentMethods = paymentMethods,
+                PaymentMethod = paymentMethod,
                 ReturnUrls = new ReturnUrls()
                 {
                     SuccessUrl = verificationUrlSuccess,
