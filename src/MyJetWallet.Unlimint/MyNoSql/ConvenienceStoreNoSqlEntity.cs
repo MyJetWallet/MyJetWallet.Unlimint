@@ -15,7 +15,7 @@ namespace MyJetWallet.Unlimint.MyNoSql
                 PartitionKey = GeneratePartitionKey(country),
                 RowKey = GenerateRowKey(unlimintMethodName),
                 Id = id,
-                UnlimintMethodId = unlimintMethodName,
+                UnlimintMethodName = unlimintMethodName,
                 Country = country,
                 Currency = currency,
                 Enabled = enabled
@@ -23,7 +23,7 @@ namespace MyJetWallet.Unlimint.MyNoSql
         }
 
         public int Id { get; set; }
-        public string UnlimintMethodId { get; set;}
+        public string UnlimintMethodName { get; set;}
         public string Country { get; set;}
         public string Currency { get; set;}
         public bool Enabled { get; set;}
