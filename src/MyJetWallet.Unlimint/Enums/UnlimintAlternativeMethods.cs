@@ -17,7 +17,8 @@ public class UnlimintAlternativeMethods
     public const string QqCodePicPay = "PICPAY";
     public const string Codi = "CODI";
     public const string Pse = "PSE";
-    
+    public const string ConvenienceStore = "CONVENIENCESSTORE";
+
     
     public static string[] Methods => new[]
         {
@@ -33,7 +34,8 @@ public class UnlimintAlternativeMethods
             Pix,
             QqCodePicPay,
             Codi,
-            Pse
+            Pse,
+            ConvenienceStore
         }
         .Distinct().OrderBy(x => x).ToArray();
     
