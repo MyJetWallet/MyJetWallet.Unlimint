@@ -17,7 +17,7 @@ public class UnlimintAlternativeMethods
     public const string QqCodePicPay = "PICPAY";
     public const string Codi = "CODI";
     public const string Pse = "PSE";
-    public const string ConvenienceStore = "CONVENIENCESSTORE";
+    public const string ConvenienceStore = "CONVENIENCESTORE";
 
     
     public static string[] Methods => new[]
