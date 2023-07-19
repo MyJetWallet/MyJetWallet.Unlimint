@@ -16,10 +16,12 @@ public class UnlimintAlternativeMethods
     public const string Pix = "PIX";
     public const string QqCodePicPay = "PICPAY";
     public const string Codi = "CODI";
+    public const string DirectBankingEurope = "DIRECTBANKINGEU";
     public const string Pse = "PSE";
+    public const string Ovo = "OVO";
+    public const string Dana = "DANA";
     public const string ConvenienceStore = "CONVENIENCESTORE";
 
-    
     public static string[] Methods => new[]
         {
             Boleto,
@@ -34,7 +36,10 @@ public class UnlimintAlternativeMethods
             Pix,
             QqCodePicPay,
             Codi,
+            DirectBankingEurope,
             Pse,
+            Ovo,
+            Dana,
             ConvenienceStore
         }
         .Distinct().OrderBy(x => x).ToArray();
