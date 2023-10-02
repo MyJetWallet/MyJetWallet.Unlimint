@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 
 namespace MyJetWallet.Unlimint.Models
@@ -17,5 +18,9 @@ namespace MyJetWallet.Unlimint.Models
 
         [JsonProperty("ipAddress"), DataMember(Order = 4)]
         public string IpAddress { get; set; }
+        
+        [JsonProperty("clientId"), DataMember(Order = 5)]
+        [CanBeNull]
+        public string ClientId { get; set; }
     }
 }
