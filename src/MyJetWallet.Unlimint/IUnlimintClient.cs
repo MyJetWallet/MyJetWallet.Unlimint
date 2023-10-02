@@ -357,5 +357,13 @@ namespace MyJetWallet.Unlimint
             CardBinRequest cardBinRequest, CancellationToken cancellationToken = default);
 
         #endregion
+
+        #region Disputes
+
+        Task<WebCallResult<List<DisputeInfos>>> GetDisputesInfo(
+            DisputeInfoRequest request,
+            CancellationToken cancellationToken = default);
+
+        #endregion
     }
 }
