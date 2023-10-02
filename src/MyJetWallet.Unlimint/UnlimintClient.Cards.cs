@@ -20,7 +20,7 @@ namespace MyJetWallet.Unlimint
         {
             return await PostAsync<List<CardInfo>>($"{EndpointUrl}/card_info", cardBinRequest, cancellationToken);
         }
+        
+        #endregion
     }
-
-    #endregion
 }
