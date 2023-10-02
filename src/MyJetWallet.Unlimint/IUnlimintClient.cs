@@ -360,7 +360,7 @@ namespace MyJetWallet.Unlimint
 
         #region Disputes
 
-        Task<WebCallResult<List<DisputeInfos>>> GetDisputesInfo(
+        Task<WebCallResult<DisputeInfos>> GetDisputesInfo(
             DisputeInfoRequest request,
             CancellationToken cancellationToken = default);
 

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
@@ -8,7 +9,7 @@ public class DisputeInfos
 {
     [DataMember(Order = 1)]
     [JsonProperty("data")]
-    public DisputeInfo Data { get; set; }
+    public List<DisputeInfo> Data { get; set; } = new();
     
     [DataMember(Order = 2)]
     [JsonProperty("has_more")]
@@ -20,23 +21,23 @@ public class DisputeInfo
 {
     [DataMember(Order = 1)]
     [JsonProperty("card_account")]
-    public DisputeResponseCardAccount CardAccount { get; set; }
+    public DisputeResponseCardAccount CardAccount { get; set; } = new();
 
     [DataMember(Order = 2)]
     [JsonProperty("customer")]
-    public DisputeResponseCustomer Customer { get; set; }
+    public DisputeResponseCustomer Customer { get; set; }  = new();
 
     [DataMember(Order = 3)]
     [JsonProperty("dispute_data")]
-    public DisputeResponseDisputeData DisputeData { get; set; }
+    public DisputeResponseDisputeData DisputeData { get; set; } = new();
 
     [DataMember(Order = 4)]
     [JsonProperty("merchant_order")]
-    public DisputeResponseMerchantOrder MerchantOrder { get; set; }
+    public DisputeResponseMerchantOrder MerchantOrder { get; set; } = new();
 
     [DataMember(Order = 5)]
     [JsonProperty("payment_data")]
-    public DisputeResponsePaymentData PaymentData { get; set; }
+    public DisputeResponsePaymentData PaymentData { get; set; } = new();
 }
 
 [DataContract]
@@ -44,7 +45,7 @@ public class DisputeResponseCardAccount
 {
     [DataMember(Order = 1)]
     [JsonProperty("card")]
-    public DisputeResponseCard Card { get; set; }
+    public DisputeResponseCard Card { get; set; } = new();
 }
 
 [DataContract]

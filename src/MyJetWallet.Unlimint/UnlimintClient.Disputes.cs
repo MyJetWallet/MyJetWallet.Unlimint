@@ -16,7 +16,7 @@ public partial class UnlimintClient
 {
     #region Disputes
 
-    public async Task<WebCallResult<List<DisputeInfos>>> GetDisputesInfo(
+    public async Task<WebCallResult<DisputeInfos>> GetDisputesInfo(
         DisputeInfoRequest request,
         CancellationToken cancellationToken = default)
     {
@@ -69,7 +69,7 @@ public partial class UnlimintClient
         }
 
         // Make the GET request with the constructed URL
-        return await GetAsync<List<DisputeInfos>>(apiUrl, cancellationToken);
+        return await GetAsync<DisputeInfos>(apiUrl, cancellationToken);
     }
     
     #endregion
