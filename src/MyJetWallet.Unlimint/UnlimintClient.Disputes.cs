@@ -62,7 +62,7 @@ public partial class UnlimintClient
         string queryString = string.Join("&", queryParams.Select(kvp => $"{kvp.Key}={Uri.EscapeDataString(kvp.Value)}"));
 
         // Construct the full URL with query parameters
-        string apiUrl = $"{EndpointUrl}/api/disputes";
+        string apiUrl = $"{EndpointUrl}/disputes";
         if (!string.IsNullOrEmpty(queryString))
         {
             apiUrl += $"?{queryString}";
