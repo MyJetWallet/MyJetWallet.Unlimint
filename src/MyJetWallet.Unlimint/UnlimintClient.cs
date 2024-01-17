@@ -19,6 +19,7 @@ namespace MyJetWallet.Unlimint
         public const string MainPublicApi = "https://cardpay.com/api";
         public const string TestPublicApi = "https://sandbox.cardpay.com/api";
 
+        public static bool PrintGetApiCalls { get; set; } = false;
         public static bool PrintPostApiCalls { get; set; } = false;
         public static bool PrintPutApiCalls { get; set; } = false;
 
@@ -125,6 +126,11 @@ namespace MyJetWallet.Unlimint
             var response = await client.GetAsync($"{url}", cancellationToken);
             var content = await response.Content.ReadAsStringAsync(cancellationToken);
 
+            if (PrintGetApiCalls)
+            {
+                Console.WriteLine($"Get: {url}\nCode: {response.StatusCode}\nResp: {content}");
+            }
+            
             // Return
             return this.EvaluateResponse<T>(response, content);
         }
