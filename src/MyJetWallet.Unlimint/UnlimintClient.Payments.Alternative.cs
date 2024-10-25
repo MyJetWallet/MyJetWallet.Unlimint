@@ -101,7 +101,8 @@ namespace MyJetWallet.Unlimint
                     Amount = amount.ToString(CultureInfo.InvariantCulture),
                     Currency = currency,
                     Note = description,
-                    ThreeDsChallengeIndicator = useThreeDsChallengeIndicator == false ? "01" : "04"
+                    ThreeDsChallengeIndicator = useThreeDsChallengeIndicator == false ? "01" : "04",
+                    ThreeDsMode = useThreeDsChallengeIndicator ? "01" : null
                 },
                 PaymentMethod = paymentMethod,
                 ReturnUrls = new ReturnUrls()

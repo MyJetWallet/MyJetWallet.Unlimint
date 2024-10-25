@@ -41,6 +41,9 @@ public class PaymentRequestPaymentData
     [JsonProperty("three_ds_challenge_indicator", NullValueHandling = NullValueHandling.Ignore)]
     public string ThreeDsChallengeIndicator { get; set; }
     
+    [JsonProperty("three_ds_mode", NullValueHandling = NullValueHandling.Ignore)]
+    public string ThreeDsMode { get; set; }
+    
     [JsonProperty("trans_type", NullValueHandling = NullValueHandling.Ignore)] 
     [JsonConverter(typeof(TransTypeEnumConverter))]
     public TransTypeEnum? TransType { get; set; }
