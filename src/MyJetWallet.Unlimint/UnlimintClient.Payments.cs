@@ -232,7 +232,7 @@ namespace MyJetWallet.Unlimint
                     GenerateToken = false,
                     Note = description,
                     ThreeDsChallengeIndicator = useThreeDsChallengeIndicator == false ? "01" : "04",
-                    ThreeDsMode = useThreeDsChallengeIndicator ? "01" : null
+                    ThreeDsMode = useThreeDsChallengeIndicator ? "02" : null
                 },
                 PaymentMethod = paymentMethod,
                 ReturnUrls = new ReturnUrls()
