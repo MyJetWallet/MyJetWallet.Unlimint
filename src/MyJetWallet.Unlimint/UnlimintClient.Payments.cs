@@ -30,6 +30,7 @@ namespace MyJetWallet.Unlimint
             string sourceId,
             bool generateToken,
             bool threeDsChallengeIndicator,
+            string bankCode,
             string description,
             string verificationUrlSuccess,
             string verificationUrlFailure,
@@ -52,6 +53,7 @@ namespace MyJetWallet.Unlimint
                     sourceId,
                     generateToken,
                     threeDsChallengeIndicator,
+                    bankCode,
                     description,
                     verificationUrlSuccess,
                     verificationUrlFailure,
@@ -76,6 +78,7 @@ namespace MyJetWallet.Unlimint
             string sourceId,
             bool generateToken,
             bool useThreeDsChallengeIndicator,
+            string bankCode,
             string description,
             string verificationUrlSuccess,
             string verificationUrlFailure,
@@ -127,6 +130,15 @@ namespace MyJetWallet.Unlimint
                 },
                 //CardAccount = new PaymentRequestCardAccount()
             };
+
+            if (!string.IsNullOrWhiteSpace(bankCode))
+            {
+                data.EWalletAccount = new EWalletAccountData()
+                {
+                    BankCode = bankCode,
+                };
+            }
+            
             return await PostAsync<PaymentGatewayCreationResponse>($"{EndpointUrl}/payments", data, cancellationToken);
         }
 

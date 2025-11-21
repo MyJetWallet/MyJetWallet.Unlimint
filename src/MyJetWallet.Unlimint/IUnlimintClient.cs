@@ -26,6 +26,7 @@ namespace MyJetWallet.Unlimint
         /// <param name="sourceId">Unique identifier for the source.</param>
         /// <param name="generateToken"></param>
         /// <param name="threeDsChallengeIndicator"></param>
+        /// <param name="bankCode">Bank code (for OPENBANKING payments)</param>
         /// <param name="description">Description of the payment with length restriction of 240 characters.</param>
         /// <param name="verificationUrlSuccess"></param>
         /// <param name="verificationUrlFailure"></param>
@@ -48,6 +49,7 @@ namespace MyJetWallet.Unlimint
             string sourceId,
             bool generateToken,
             bool threeDsChallengeIndicator,
+            string bankCode,
             string description,
             string verificationUrlSuccess,
             string verificationUrlFailure,
@@ -71,6 +73,7 @@ namespace MyJetWallet.Unlimint
             string sourceId,
             bool generateToken,
             bool threeDsChallengeIndicator,
+            string bankCode,
             string description,
             string verificationUrlSuccess,
             string verificationUrlFailure,
