@@ -133,7 +133,7 @@ namespace MyJetWallet.Unlimint
 
             if (!string.IsNullOrWhiteSpace(bankCode))
             {
-                data.EWalletAccount = new EWalletAccountData()
+                data.EwalletAccount = new PaymentRequestEWalletAccount()
                 {
                     BankCode = bankCode,
                 };

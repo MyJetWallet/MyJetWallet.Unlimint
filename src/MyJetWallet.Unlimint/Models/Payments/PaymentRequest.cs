@@ -28,9 +28,6 @@ namespace MyJetWallet.Unlimint.Models.Payments
         
         [JsonProperty("payment_method")] 
         public string PaymentMethod { get; set; }
-        
-        [JsonProperty("ewallet_account")] 
-        public EWalletAccountData EWalletAccount { get; set; }
 
         [JsonProperty("return_urls", NullValueHandling = NullValueHandling.Ignore)] 
         public ReturnUrls ReturnUrls { get; set; }
