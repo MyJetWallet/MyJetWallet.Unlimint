@@ -142,6 +142,9 @@ namespace TestApp
             //     merchantOrderId, requestId);
             //
             //
+
+            // await TestGetBanksProd("OPENBANKING", "EUR", null);
+            // await TestGetBanksProd("OPENBANKING", "EUR", "GB");
         }
 
         private static async Task TestPublicKey()
@@ -510,6 +513,26 @@ namespace TestApp
             }
             
             var card2 = JsonConvert.SerializeObject(cardResponse.Data[0]);
+        }
+
+        private static async Task TestGetBanksProd(string method, string currency, string country)
+        {
+            var terminalCode = Environment.GetEnvironmentVariable("UNLIMINT_TERMINAL_CODE_GW_" + currency);
+            var password = Environment.GetEnvironmentVariable("UNLIMINT_PASSWORD_GW_" + currency);
+            
+            var authClient = new UnlimintAuthClient(terminalCode, password);
+            var token = await authClient.GetAuthorizationTokenAsync();
+            
+            if (!token.Success || string.IsNullOrEmpty(token.Data?.AccessToken))
+            {
+                throw new Exception(token.Message);
+            }
+            
+            var client = new UnlimintClient(token?.Data?.AccessToken);
+            
+            var banks = await client.GetBanksAsync(method, currency, country);
+            
+            Console.WriteLine("Banks=" + banks.Data.Banks.Count);
         }
     }
 }
