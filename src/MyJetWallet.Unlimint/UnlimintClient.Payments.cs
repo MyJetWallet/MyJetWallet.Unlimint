@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.IO.Compression;
 using System.Threading;
 using System.Threading.Tasks;
 using MyJetWallet.Unlimint.Models;
 using MyJetWallet.Unlimint.Models.Payments;
-using System.Linq;
-using System.Security.Principal;
 
 namespace MyJetWallet.Unlimint
 {
@@ -22,6 +18,7 @@ namespace MyJetWallet.Unlimint
             string merchantOrderId,
             string requestId,
             string email,
+            string fullName,
             string phoneNumber,
             string sessionId,
             string ipAddress,
@@ -45,6 +42,7 @@ namespace MyJetWallet.Unlimint
                     merchantOrderId,
                     requestId,
                     email,
+                    fullName,
                     phoneNumber,
                     sessionId,
                     ipAddress,
@@ -70,6 +68,7 @@ namespace MyJetWallet.Unlimint
             string merchantOrderId,
             string requestId,
             string email,
+            string fullName,
             string phoneNumber,
             string sessionId,
             string ipAddress,
@@ -100,9 +99,10 @@ namespace MyJetWallet.Unlimint
                 Customer = new PaymentRequestCustomer
                 {
                     Email = email,
+                    FullName = fullName,
                     Id = clientId,
                     Phone = phoneNumber,
-                    Ip = ipAddress
+                    Ip = ipAddress,
                 },
                 MerchantOrder = new PaymentRequestMerchantOrder
                 {

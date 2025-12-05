@@ -18,6 +18,7 @@ namespace MyJetWallet.Unlimint
         /// <param name="merchantOrderId">Unique idempotency key. This key is utilized to ensure exactly-once execution of mutating requests.</param>
         /// <param name="requestId">Unique identifier of the public key used in encryption.</param>
         /// <param name="email">Email of the user</param>
+        /// <param name="fullName">Full name of the user</param>
         /// <param name="phoneNumber">Phone number of the user in E.164 format. We recommend using a library such as libphonenumber to parse and validate phone numbers.</param>
         /// <param name="sessionId">Hash of the session identifier; typically of the end user. This helps us make risk decisions and prevent fraud. IMPORTANT: Please hash the session identifier to prevent sending us actual session identifiers.</param>
         /// <param name="ipAddress">Single IPv4 or IPv6 address of user</param>
@@ -41,6 +42,7 @@ namespace MyJetWallet.Unlimint
         WebCallResult<PaymentGatewayCreationResponse> CreatePayment(string merchantOrderId,
             string requestId,
             string email,
+            string fullName,
             string phoneNumber,
             string sessionId,
             string ipAddress,
@@ -65,6 +67,7 @@ namespace MyJetWallet.Unlimint
             string merchantOrderId,
             string requestId,
             string email,
+            string fullName,
             string phoneNumber,
             string sessionId,
             string ipAddress,
